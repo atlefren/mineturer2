@@ -1,0 +1,189 @@
+
+/* ---------------------------------------------------------------- */
+/*    Generelle elementer                                           */
+/* ---------------------------------------------------------------- */
+
+
+
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #2b2929;    
+}
+
+/* ---------------------------------------------------------------- */
+/*    Mystiske klasser                                              */
+/* ---------------------------------------------------------------- */
+
+
+.text_green {
+  color: #6f9b48;
+}
+
+.text_red {
+  color: red;
+}
+
+.text_large {
+  font-size: 150%;
+}
+
+p.breaker {
+  clear: both;
+}
+
+.hidden{
+    display: none;
+}
+
+div.container {
+  padding: 0;
+  background-color: white;  
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+div.header {  
+  padding: 15px 30px;  
+  background-color: #eaeae6;
+  font-weight: lighter;  
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.mt-navbar {
+  padding-top: 15px;
+}
+
+#main {
+  padding: 10px;
+}
+
+/* ---------------------------------------------------------------- */
+/*    Strukturelle elementer                                        */
+/* ---------------------------------------------------------------- */
+
+
+div#container {
+  margin: 30px auto;
+  width: 970px;
+  background-color: white;
+  -moz-border-radius: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -webkit-border-top-left-radius: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -khtml-border-top-right-radius: 6px;
+  -khtml-border-top-left-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+div#head {
+  padding: 15px 30px;
+  height: 80px;
+  background-color: #eaeae6;
+  font-weight: lighter;
+  -webkit-border-top-right-radius: 6px;
+  -webkit-border-top-left-radius: 6px;
+  -khtml-border-top-right-radius: 6px;
+  -khtml-border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+div#head h1 {
+  float: left;
+
+}
+
+/* ------------------------------------ */
+/*    Meny i header                     */
+/* ------------------------------------ */
+
+
+div#meta {
+  margin: 30px 0 0 0;
+  text-align: right;
+  font-size: 85%;
+}
+
+div#meta a {
+  padding: 10px 15px 10px 34px;
+  text-decoration: none;
+  color: #2b2929;
+  background-color: white;
+  -moz-border-radius: 6px;
+  -webkit-border-top-right-radius: 6px;
+  -webkit-border-top-left-radius: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -khtml-border-top-right-radius: 6px;
+  -khtml-border-top-left-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+div#meta a#uploadfile {
+  background-image: url(../gfx/file_upload.png);
+  background-repeat: no-repeat;
+  background-position: 8px;
+  /* image used with permission: http://www.iconfinder.com/icondetails/53443/20/file_upload_icon */
+}
+
+div#meta a#editprofile {
+  background-image: url(../gfx/edit_profile.png);
+  background-repeat: no-repeat;
+  background-position: 8px;
+  /* image used with permission: http://www.iconfinder.com/icondetails/53580/20/settings_icon */
+  /* image used with permission: http://www.iconfinder.com/icondetails/53703/20/profile_user_icon */
+  /* image used with permission: http://www.iconfinder.com/icondetails/53509/20/alt_closed_edit_mail_icon */
+}
+
+div#meta a#logout {
+  background-image: url(../gfx/logout.png);
+  background-repeat: no-repeat;
+  background-position: 10px;
+  /* image used with permission: http://www.iconfinder.com/icondetails/33844/128/power_shutdown_icon */
+}
+
+div#meta a#uploadfile:hover {
+  background-color: #6f9b48;
+  color: white;
+}
+
+div#meta a#editprofile:hover {
+  background-color: #6f9b48;
+  color: white;
+}
+
+div#meta a#logout:hover {
+  background-color: red;
+  color: white;
+}
+
+div#wrapper {
+  padding: 20px;
+  font-size: 85%;
+}
+
+/* ------------------------------------ */
+/*    Bunntekst                         */
+/* ------------------------------------ */
+
+div#footer {
+  color: white;
+  font-size: 80%;
+  text-align: center;
+}
+

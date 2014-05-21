@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+
+      {% assets "css" %}
+      <link rel="stylesheet" type="text/css" media="all" href="{{ ASSET_URL }}" />
+      {% endassets %}
+
+    {% endblock %}
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <nav class="navbar" role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">    
+            <h1><span class="text_green">Mine</span>Turer</h1>
+            <p>Dine turer på nett!</p>
+          </div>          
+          <ul class="nav navbar-nav navbar-right mt-navbar">        
+            <li><a id="#uploadfile" href="#uploadfile">Last opp ny tur</a></li>
+            <li><a id="editprofile" href="#editprofile">Rediger profil</a></li>
+            <li><a id="#logout" href="#logout">Logg ut</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div id="main">      
+        {% block content %}
+        {% endblock %}      
+    </div>
+  </div>
+  <div id="footer">
+    <p>&copy; MineTurer &bull; Kontakt oss &bull; Informasjon om opphavsrett &bull; Information in English</p>
+  </div> <!-- div#footer -->
+
+
+  {% block js_templates %}
+  {% endblock %}
+  
+  {% block js %}
+  {% endblock %}
+</body>
+</html>
