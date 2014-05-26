@@ -48,16 +48,18 @@ def create_views(app):
     if 'remember_me' in request.form:
         remember_me = True
         
-    registered_user = User.query.filter_by(
+    user = User.query.filter_by(
       username=username, 
-      password=password
     ).first()
 
-    if registered_user is None:
+   
+    print user
+    if user is None or not user.password_ok(password):
+      return redirect(url_for('login'))
       print "???"
     #    flash('Username or Password is invalid' , 'error')
       return redirect(url_for('login'))
-    login_user(registered_user, remember=remember_me)
+    login_user(user, remember=remember_me)
     #flash('Logged in successfully')
     return redirect(request.args.get('next') or url_for('trips'))
 

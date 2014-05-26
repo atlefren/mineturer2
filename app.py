@@ -31,6 +31,6 @@ def create_app(debug, database_url):
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    db = os.environ.get('BOOKING_DATABASE_URL', 'sqlite:////tmp/mineturer.db')
+    db = os.environ.get('DATABASE_URL', 'sqlite:////tmp/mineturer.db')
     app = create_app(os.environ.get('DEBUG', False), db)
     app.run(host='0.0.0.0', port=port, debug=True)

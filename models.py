@@ -1,31 +1,33 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import hashlib
 
 from sqlalchemy import Column, Integer, String, DateTime, Date, Time, ForeignKey, Enum, Boolean
 from sqlalchemy.orm import relationship
+
 from database import Base
 
 class User(Base):
     __tablename__ = "users"
-    id = Column('user_id', Integer, primary_key=True)
+    __table_args__ = {'schema': 'mineturer'}
+    id = Column('userid', Integer, primary_key=True)
     username = Column('username', String(20), unique=True, index=True)
     password = Column('password', String(10))
     fullname = Column('fullname', String(50))
-    email = Column('email', String(50), unique=True, index=True)
-    registered_on = Column('registered_on', DateTime)
+    fullname = Column('enabled', Boolean)
+    email = Column('email', String(50), unique=True, index=True)    
  
     def __init__(self, username, password, email, fullname):
         self.username = username
         self.fullname = fullname
         self.password = password
         self.email = email
-        self.registered_on = datetime.utcnow()
     
     def is_authenticated(self):
         return True
  
     def is_active(self):
-        return True
+        return self.enabled
  
     def is_anonymous(self):
         return False
@@ -33,6 +35,8 @@ class User(Base):
     def get_id(self):
         return unicode(self.id)
  
+    def password_ok(self, password):        
+        return hashlib.sha1(password).hexdigest() == self.password
     def __repr__(self):
         return '<User %r>' % (self.username)        
 
