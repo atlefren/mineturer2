@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block css %}
+  {{ super() }}
+      {% assets "login" %}
+      <link rel="stylesheet" type="text/css" media="all" href="{{ ASSET_URL }}" />
+      {% endassets %}
+
+    {% endblock %}
+
+{% block content %}
+
+<form action="" method=post class="form-signin">
+  <h2 class="form-signin-heading">Logg inn</h2>  
+
+  <input type="text" name="username" class="form-control" placeholder="Brukernavn" required autofocus>
+  <input type="password" name="password" class="form-control" placeholder="Passord" required>
+  <label class="checkbox">
+    <input type="checkbox" value="remember_me"> Husk meg
+  </label>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Logg inn</button>
+</form>
+
+
+{% endblock %}

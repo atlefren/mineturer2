@@ -2,4 +2,9 @@
 
 {% block content %}
 <h2>Test</h2>
+
+{% if g.user.is_authenticated()%}  
+<p>Logget inn</p>
+{% endif %}
+
 {% endblock %}

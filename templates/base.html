@@ -1,49 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block css %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-      {% assets "css" %}
-      <link rel="stylesheet" type="text/css" media="all" href="{{ ASSET_URL }}" />
-      {% endassets %}
+    <title>MineTurer</title>
+    
+    {% assets "css" %}    
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+  </head>
 
-    {% endblock %}
-</head>
-<body>
+  <body>
 
-  <div class="container">
-    <div class="header">
-      <nav class="navbar" role="navigation">
+    <div class="container">
+
+      <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">    
-            <h1><span class="text_green">Mine</span>Turer</h1>
-            <p>Dine turer på nett!</p>
-          </div>          
-          <ul class="nav navbar-nav navbar-right mt-navbar">        
-            <li><a id="#uploadfile" href="#uploadfile">Last opp ny tur</a></li>
-            <li><a id="editprofile" href="#editprofile">Rediger profil</a></li>
-            <li><a id="#logout" href="#logout">Logg ut</a></li>
-          </ul>
+          <div class="navbar-header">
+            <button data-target="#header-buttons" data-toggle="collapse" class="navbar-toggle" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <h1><a href="#"  class=""><span class="text_green">Mine</span>Turer</a> <span class="smallhead">v2</span></h1>
+            {% if g.user.is_authenticated() %}          
+            <p>{{g.user.fullname}}</p>
+            {% endif %}
+          </div>
+          <div id="header-buttons" class="collapse navbar-collapse navbar-right">
+            {% if g.user.is_authenticated() %}          
+            <button class="btn btn-lg btn-default navbar-btn" type="button">
+              <span class="glyphicon glyphicon-upload"></span> Last opp ny tur
+            </button>
+            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('editprofile')}}">
+              <span class="glyphicon glyphicon-user"></span> Rediger profil
+            </a>
+            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('logout')}}">
+              <span class="glyphicon glyphicon-log-out"></span> Logg ut
+            </a>
+            {% else %}
+            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('register')}}">
+              <span class="glyphicon glyphicon-user"></span> Registrer deg
+            </a>
+            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('login')}}">
+              <span class="glyphicon glyphicon-log-in"></span> Logg inn
+            </a>
+            {% endif %}
+          </div>
         </div>
       </nav>
-    </div>
-    <div id="main">      
+      <div class="content"> 
         {% block content %}
-        {% endblock %}      
+        {% endblock %} 
+      </div>
+    </div> <!-- /container -->
+    <div class="footer">
+      © MineTurer • <a href="#">Kontakt oss</a> • <a href="#">Informasjon om opphavsrett</a> • <a href="#">Information in English</a>
     </div>
-  </div>
-  <div id="footer">
-    <p>&copy; MineTurer &bull; Kontakt oss &bull; Informasjon om opphavsrett &bull; Information in English</p>
-  </div> <!-- div#footer -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>    -->
+    {% assets "js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 
-
-  {% block js_templates %}
-  {% endblock %}
-  
-  {% block js %}
-  {% endblock %}
-</body>
+  </body>
 </html>
