@@ -77,3 +77,8 @@ div.footer {
 .smallhead {
   font-size: 60%;
 }
+
+a.title-link {
+  color: #000;
+  font-weight: bold;
+}
