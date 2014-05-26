@@ -14,7 +14,7 @@ class User(Base):
     username = Column('username', String(20), unique=True, index=True)
     password = Column('password', String(10))
     fullname = Column('fullname', String(50))
-    fullname = Column('enabled', Boolean)
+    enabled = Column('enabled', Boolean)
     email = Column('email', String(50), unique=True, index=True)    
  
     def __init__(self, username, password, email, fullname):
