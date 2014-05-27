@@ -13,7 +13,7 @@ class User(Base):
     __table_args__ = {'schema': 'mineturer'}
     id = Column('userid', Integer, primary_key=True)
     username = Column('username', String(20), unique=True, index=True)
-    password = Column('password', String(50))
+    password = Column('password', String(50), nullable=True)
     bcrypt_pwd = Column('bcrypt_pwd', String)
     fullname = Column('fullname', String(50))
     enabled = Column('enabled', Boolean)
@@ -22,9 +22,13 @@ class User(Base):
     def __init__(self, username, password, email, fullname):
         self.username = username
         self.fullname = fullname
-        self.password = password
+        self.set_password(password)
         self.email = email
     
+    def set_password(password):
+        sha1_hashed = hashlib.sha1(password).hexdigest()
+        self.bcrypt_pwd = bcrypt.hashpw(sha1_hashed, bcrypt.gensalt())
+
     def is_authenticated(self):
         return True
  
