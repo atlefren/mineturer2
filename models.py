@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import hashlib
 import bcrypt
 
-from sqlalchemy import Column, Integer, String, DateTime, Date, Time, ForeignKey, Enum, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Boolean
 
 from database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -17,43 +16,42 @@ class User(Base):
     bcrypt_pwd = Column('bcrypt_pwd', String)
     fullname = Column('fullname', String(50))
     enabled = Column('enabled', Boolean)
-    email = Column('email', String(50), unique=True, index=True)    
- 
+    email = Column('email', String(50), unique=True, index=True)
+
     def __init__(self, username, password, email, fullname):
         self.username = username
         self.fullname = fullname
         self.set_password(password)
         self.email = email
-    
-    def set_password(password):
+
+    def set_password(self, password):
         sha1_hashed = hashlib.sha1(password).hexdigest()
         self.bcrypt_pwd = bcrypt.hashpw(sha1_hashed, bcrypt.gensalt())
 
     def is_authenticated(self):
         return True
- 
+
     def is_active(self):
         return self.enabled
- 
+
     def is_anonymous(self):
         return False
- 
+
     def get_id(self):
         return unicode(self.id)
- 
-    def password_ok(self, password):        
-        
+
+    def password_ok(self, password):
+
         sha1_hashed = hashlib.sha1(password).hexdigest()
 
         bcrypt_hashed = bcrypt.hashpw(
-            sha1_hashed, 
+            sha1_hashed,
             self.bcrypt_pwd.encode('utf-8')
-        ) 
+        )
         return bcrypt_hashed == self.bcrypt_pwd
-    
 
     def __repr__(self):
-        return '<User %r>' % (self.username)        
+        return '<User %r>' % (self.username)
 
 
 class Test(Base):
@@ -61,5 +59,5 @@ class Test(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, default=False)
 
-    def __init__(self, name):        
+    def __init__(self, name):
         self.name = name

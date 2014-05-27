@@ -12,6 +12,9 @@ if __name__ == "__main__":
     app = create_app(os.environ.get('DEBUG', False), db)
 
     for user in app.db_session.query(User).all():
-        user.bcrypt_pwd = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+        user.bcrypt_pwd = bcrypt.hashpw(
+            user.password.encode('utf-8'),
+            bcrypt.gensalt()
+        )
         app.db_session.add(user)
-    app.db_session.commit()      
+    app.db_session.commit()

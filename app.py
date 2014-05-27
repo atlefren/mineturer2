@@ -3,10 +3,11 @@ import os
 
 from flask import Flask
 from webassets.loaders import PythonLoader
-from flask.ext.assets import Environment, Bundle
+from flask.ext.assets import Environment
 
 from views import create_views
-from database import init_db, Base
+from database import init_db
+
 
 def create_bundles(app):
     assets = Environment(app)
@@ -14,6 +15,7 @@ def create_bundles(app):
     bundles = PythonLoader('assetbundle').load_bundles()
     for name, bundle in bundles.iteritems():
         assets.register(name, bundle)
+
 
 def create_app(debug, database_url):
     app = Flask(__name__)
