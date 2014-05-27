@@ -6,7 +6,7 @@ var MT = MT || {};
     });
 
     ns.Trips = SpatialBB.MarkerCollection.extend({
-        
+
         model: Trip,
 
         getLayerGroup: function () {
@@ -34,20 +34,20 @@ var MT = MT || {};
 
         render: function () {
 
-        this.$el.append(this.collection.map(function (trip) {
-            return new TripItemView({model: trip}).render().$el;
-        }));
+            this.$el.append(this.collection.map(function (trip) {
+                return new TripItemView({model: trip}).render().$el;
+            }));
 
-        return this;
+            return this;
         }
     });
 
     ns.createMap = function (div, trips) {
 
         L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
-    
+
         var map = L.map(div[0]).setView([64.5, 15], 5);
-    
+
         L.tileLayer(
             'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
             {
@@ -55,7 +55,7 @@ var MT = MT || {};
             }
         ).addTo(map);
         var lg = trips.getLayerGroup();
-    
+
         map.addLayer(lg);
     };
 
