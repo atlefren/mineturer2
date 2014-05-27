@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 import hashlib
+import bcrypt
 
 from sqlalchemy import Column, Integer, String, DateTime, Date, Time, ForeignKey, Enum, Boolean
 from sqlalchemy.orm import relationship
@@ -12,7 +13,8 @@ class User(Base):
     __table_args__ = {'schema': 'mineturer'}
     id = Column('userid', Integer, primary_key=True)
     username = Column('username', String(20), unique=True, index=True)
-    password = Column('password', String(10))
+    password = Column('password', String(50))
+    bcrypt_pwd = Column('bcrypt_pwd', String)
     fullname = Column('fullname', String(50))
     enabled = Column('enabled', Boolean)
     email = Column('email', String(50), unique=True, index=True)    
@@ -36,7 +38,16 @@ class User(Base):
         return unicode(self.id)
  
     def password_ok(self, password):        
-        return hashlib.sha1(password).hexdigest() == self.password
+        
+        sha1_hashed = hashlib.sha1(password).hexdigest()
+
+        bcrypt_hashed = bcrypt.hashpw(
+            sha1_hashed, 
+            self.bcrypt_pwd.encode('utf-8')
+        ) 
+        return bcrypt_hashed == self.bcrypt_pwd
+    
+
     def __repr__(self):
         return '<User %r>' % (self.username)        
 

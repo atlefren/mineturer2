@@ -21,8 +21,6 @@ def create_app(debug, database_url):
   app.debug = debug
   (app.db_session, app.db_metadata, app.db_engine) = init_db(database_url)
 
-  Base.metadata.create_all(app.db_engine)
-
   create_bundles(app)
   create_views(app)
 
