@@ -9,22 +9,22 @@ from views import create_views
 from database import init_db, Base
 
 def create_bundles(app):
-  assets = Environment(app)
-  assets.debug = True if app.debug == 'True' else False
-  bundles = PythonLoader('assetbundle').load_bundles()
-  for name, bundle in bundles.iteritems():
-    assets.register(name, bundle)
+    assets = Environment(app)
+    assets.debug = True if app.debug == 'True' else False
+    bundles = PythonLoader('assetbundle').load_bundles()
+    for name, bundle in bundles.iteritems():
+        assets.register(name, bundle)
 
 def create_app(debug, database_url):
-  app = Flask(__name__)
-  app.secret_key = os.environ.get('SECRET_KEY', 'development_fallback')
-  app.debug = debug
-  (app.db_session, app.db_metadata, app.db_engine) = init_db(database_url)
+    app = Flask(__name__)
+    app.secret_key = os.environ.get('SECRET_KEY', 'development_fallback')
+    app.debug = debug
+    (app.db_session, app.db_metadata, app.db_engine) = init_db(database_url)
 
-  create_bundles(app)
-  create_views(app)
+    create_bundles(app)
+    create_views(app)
 
-  return app
+    return app
 
 
 if __name__ == "__main__":
