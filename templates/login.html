@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
-{% block css %}
-  {{ super() }}
-      {% assets "login" %}
-      <link rel="stylesheet" type="text/css" media="all" href="{{ ASSET_URL }}" />
-      {% endassets %}
-    {% endblock %}
+{% block css %}  
+  {% assets "login" %}
+  <link rel="stylesheet" type="text/css" media="all" href="{{ ASSET_URL }}" />
+  {% endassets %}
+{% endblock %}
 
 {% block content %}
 

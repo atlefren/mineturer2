@@ -50,12 +50,48 @@ div.footer {
 
 .trip-item {
   padding-left: 50px;
-}
-
-.nordicski {  
-  background-image: url(http://www.mineturer.org/GpxUpload/gfx/icons/nordicski.png);
   background-repeat: no-repeat;
   background-position: 5px;
+}
+
+.nordicski {   
+  background-image: url(../../images/icons/nordicski.png);
+}
+.atv {   
+  background-image: url(../../images/icons/atv.png);
+}
+.car {   
+  background-image: url(../../images/icons/car.png);
+}
+.cycling {   
+  background-image: url(../../images/icons/cycling.png);
+}
+.default {   
+  background-image: url(../../images/icons/default.png);
+}
+.hiking {   
+  background-image: url(../../images/icons/hiking.png);
+}
+.jogging {   
+  background-image: url(../../images/icons/jogging.png);
+}
+.motorbike {   
+  background-image: url(../../images/icons/motorbike.png);
+}
+.rollerskate {   
+  background-image: url(../../images/icons/rollerskate.png);
+}
+.snowboarding {   
+  background-image: url(../../images/icons/snowboarding.png);
+}
+.snowshoeing {   
+  background-image: url(../../images/icons/snowshoeing.png);
+}
+.swimming {   
+  background-image: url(../../images/icons/swimming.png);
+}
+.walking {   
+  background-image: url(../../images/icons/walking.png);
 }
 
 .footer a {

@@ -11,9 +11,11 @@
 
     <title>MineTurer</title>
     
-    {% assets "css" %}    
-    <link href="{{ ASSET_URL }}" rel="stylesheet">
-    {% endassets %}
+    {% block css %}
+      {% assets "base_css" %}    
+      <link href="{{ ASSET_URL }}" rel="stylesheet">
+      {% endassets %}
+    {% endblock css %}
   </head>
 
   <body>
@@ -64,10 +66,13 @@
     <div class="footer">
       © MineTurer • <a href="#">Kontakt oss</a> • <a href="#">Informasjon om opphavsrett</a> • <a href="#">Information in English</a>
     </div>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>    -->
-    {% assets "js" %}
+    {% block templates %}
+    {% endblock %}
+
+    {% block js %}
+    {% assets "base_js" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
-
+    {% endblock %}
   </body>
 </html>
