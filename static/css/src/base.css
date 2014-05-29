@@ -9,112 +9,143 @@ body {
     background-color: #2b2929;    
 }
 
+div.container {
+    padding: 0;
+    background-color: white;  
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+/* header */
+
 div.header {    
-  background-color: #eaeae6;
-  font-weight: lighter;  
-  border-top-right-radius: 6px;
-  border-top-left-radius: 6px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+    background-color: #eaeae6;
+    font-weight: lighter;  
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .navbar {
-  min-height: 100px;
+    min-height: 100px;
+}
+
+.navbar-default {
+    background-color: #EAEAE6;
 }
 
 #header-buttons {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
-div.container {
-  padding: 0;
-  background-color: white;  
-  border-top-right-radius: 6px;
-  border-top-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 6px;
+/* end header */
+
+
+/* buttons */
+.btn-ok, .btn-alert {
+    border: 0;
+}
+
+.btn-ok:hover {
+    background-color: #6f9b48;
+    color: white;
+}
+
+.btn-alert:hover {
+    background-color: #D9534F;
+    color: white;
+}
+
+.btn-mineturer, .btn-mineturer:hover {
+    background-color: #6f9b48;
+    border: 0;
+    color: white;
 }
 
 div.content {
-  padding: 10px;
+    padding: 10px;
 }
 
 div.footer {
-  margin-top: 10px;
-  color: white;
-  font-size: 80%;
-  text-align: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 80%;
+    text-align: center;
 }
 
 /*triplist*/
 
 .trip-item {
-  padding-left: 50px;
-  background-repeat: no-repeat;
-  background-position: 5px;
+    padding-left: 50px;
+    background-repeat: no-repeat;
+    background-position: 5px;
 }
 
 .nordicski {   
-  background-image: url(../../images/icons/nordicski.png);
+    background-image: url(../../images/icons/nordicski.png);
 }
 .atv {   
-  background-image: url(../../images/icons/atv.png);
+    background-image: url(../../images/icons/atv.png);
 }
 .car {   
-  background-image: url(../../images/icons/car.png);
+    background-image: url(../../images/icons/car.png);
 }
 .cycling {   
-  background-image: url(../../images/icons/cycling.png);
+    background-image: url(../../images/icons/cycling.png);
 }
 .default {   
-  background-image: url(../../images/icons/default.png);
+    background-image: url(../../images/icons/default.png);
 }
 .hiking {   
-  background-image: url(../../images/icons/hiking.png);
+    background-image: url(../../images/icons/hiking.png);
 }
 .jogging {   
-  background-image: url(../../images/icons/jogging.png);
+    background-image: url(../../images/icons/jogging.png);
 }
 .motorbike {   
-  background-image: url(../../images/icons/motorbike.png);
+    background-image: url(../../images/icons/motorbike.png);
 }
 .rollerskate {   
-  background-image: url(../../images/icons/rollerskate.png);
+    background-image: url(../../images/icons/rollerskate.png);
 }
 .snowboarding {   
-  background-image: url(../../images/icons/snowboarding.png);
+    background-image: url(../../images/icons/snowboarding.png);
 }
 .snowshoeing {   
-  background-image: url(../../images/icons/snowshoeing.png);
+    background-image: url(../../images/icons/snowshoeing.png);
 }
 .swimming {   
-  background-image: url(../../images/icons/swimming.png);
+    background-image: url(../../images/icons/swimming.png);
 }
 .walking {   
-  background-image: url(../../images/icons/walking.png);
+    background-image: url(../../images/icons/walking.png);
 }
 
 .footer a {
-  color: white;
+    color: white;
 }
 
 /*kart */
 
 .map {
-  background: #F8F8F8;
-  min-height: 500px;
-  border-radius: 6px;
+    background: #F8F8F8;
+    min-height: 500px;
+    border-radius: 6px;
 }
 
 /* magi */
 .text_green {
-  color: #6f9b48;
+    color: #6f9b48;
 }
 .smallhead {
-  font-size: 60%;
+    font-size: 60%;
 }
 
 a.title-link {
-  color: #000;
-  font-weight: bold;
+    color: #000;
+    font-weight: bold;
 }

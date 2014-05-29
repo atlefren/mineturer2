@@ -54,22 +54,22 @@
 
             {% if g.user.is_authenticated() %}          
 
-            <button class="btn btn-lg btn-default navbar-btn" type="button">
+            <button class="btn btn-lg btn-default navbar-btn btn-ok" type="button">
               <span class="glyphicon glyphicon-upload"></span> Last opp ny tur
             </button>
-            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('editprofile')}}">
+            <a class="btn btn-lg btn-default navbar-btn btn-ok" href="{{url_for('editprofile')}}">
               <span class="glyphicon glyphicon-user"></span> Rediger profil
             </a>
-            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('logout')}}">
+            <a class="btn btn-lg btn-default navbar-btn btn-alert" href="{{url_for('logout')}}">
               <span class="glyphicon glyphicon-log-out"></span> Logg ut
             </a>
 
             {% else %}
 
-            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('register')}}">
+            <a class="btn btn-lg btn-default navbar-btn btn-ok" href="{{url_for('register')}}">
               <span class="glyphicon glyphicon-user"></span> Registrer deg
             </a>
-            <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('login')}}">
+            <a class="btn btn-lg btn-default navbar-btn btn-ok" href="{{url_for('login')}}">
               <span class="glyphicon glyphicon-log-in"></span> Logg inn
             </a>
 
