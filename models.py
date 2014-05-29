@@ -2,14 +2,18 @@
 import hashlib
 import bcrypt
 
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import (Column, Integer, String, Text, Boolean, DateTime,
+                        Numeric, ForeignKey)
+from sqlalchemy.orm import relationship
+from geoalchemy2.types import Geometry
+from geoalchemy2.shape import to_shape
 
 from database import Base
 
 
 class User(Base):
     validation_errors = None
-    __tablename__ = "users"
+    __tablename__ = 'users'
     __table_args__ = {'schema': 'mineturer'}
     id = Column('userid', Integer, primary_key=True)
     username = Column('username', String(20), unique=True, index=True)
@@ -18,6 +22,11 @@ class User(Base):
     fullname = Column('fullname', String(50))
     enabled = Column('enabled', Boolean)
     email = Column('email', String(50), unique=True, index=True)
+    trips = relationship(
+        'Trip',
+        backref='mineturer.user',
+        order_by='desc(Trip.start)'
+    )
 
     def __init__(self, username=None, password=None, password2=None,
                  email=None, fullname=None):
@@ -89,6 +98,48 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+
+class Trip(Base):
+    __tablename__ = 'trips'
+    __table_args__ = {'schema': 'mineturer'}
+    id = Column('tripid', Integer, primary_key=True)
+    title = Column('title', String)
+    description = Column('description', Text)
+    start = Column('start', DateTime)
+    stop = Column('stop', DateTime)
+    type = Column('triptype', String)
+    userid = Column(Integer, ForeignKey('mineturer.users.userid'))
+    user = relationship(User, primaryjoin=userid == User.id)
+    points = relationship('Point', backref='mineturer.trips', lazy='dynamic')
+
+    def serialize(self):
+        start = to_shape(self.points.first().geom)
+        return {
+            'position': {'lon': start.x, 'lat': start.y},
+            'id': self.id,
+            'type': self.type,
+            'date': self.start.isoformat(),
+            'title': self.title
+        }
+
+    def __repr__(self):
+        return '<Trip %r>' % (self.title)
+
+
+class Point(Base):
+    __tablename__ = 'points'
+    __table_args__ = {'schema': 'mineturer'}
+    pid = Column('pid', Integer, primary_key=True)
+    geom = Column(Geometry(geometry_type='POINT', srid=4326))
+    time = Column('time', DateTime)
+    ele = Column('ele', Numeric)
+    hr = Column('hr', Numeric)
+    tripid = Column(Integer, ForeignKey('mineturer.trips.tripid'))
+    trip = relationship(Trip, primaryjoin=tripid == Trip.id)
+
+    def __repr__(self):
+        return '<Point %r>' % (self.pid)
 
 
 def get_user_by_username(username):
