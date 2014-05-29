@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Test</h2>
+<h2>Velkommen</h2>
 {% include("flash_success.html") %}
 
-{% if g.user.is_authenticated()%}  
-<p>Logget inn</p>
-{% endif %}
-
+<p>
+    MineTurer er en webtjeneste for å holde rede på GPX-filer (også kjent 
+    som GPS-spor/GPS-tracks).
+</p>
+<p>
+    Dette er den nye og forbedrede versjonen, som sikkert vil lide av 
+    "second system syndrome" og aldri bli ferdig..
+</p>
 {% endblock %}
