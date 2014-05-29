@@ -25,19 +25,35 @@
       <nav role="navigation" class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <button data-target="#header-buttons" data-toggle="collapse" class="navbar-toggle" type="button">
+
+            <button 
+                data-target="#header-buttons" 
+                data-toggle="collapse" 
+                class="navbar-toggle" 
+                type="button"
+                >
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <h1><a href="/" class="title-link"><span class="text_green">Mine</span>Turer</a> <span class="smallhead">v2</span></h1>
+
+            <h1>
+                <a href="/" class="title-link">
+                    <span class="text_green">Mine</span>Turer
+                </a> 
+                <span class="smallhead">v2</span>
+            </h1>
+
             {% if g.user.is_authenticated() %}          
             <p>{{g.user.fullname}}</p>
             {% endif %}
+
           </div>
           <div id="header-buttons" class="collapse navbar-collapse navbar-right">
+
             {% if g.user.is_authenticated() %}          
+
             <button class="btn btn-lg btn-default navbar-btn" type="button">
               <span class="glyphicon glyphicon-upload"></span> Last opp ny tur
             </button>
@@ -47,25 +63,33 @@
             <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('logout')}}">
               <span class="glyphicon glyphicon-log-out"></span> Logg ut
             </a>
+
             {% else %}
+
             <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('register')}}">
               <span class="glyphicon glyphicon-user"></span> Registrer deg
             </a>
             <a class="btn btn-lg btn-default navbar-btn" href="{{url_for('login')}}">
               <span class="glyphicon glyphicon-log-in"></span> Logg inn
             </a>
+
             {% endif %}
+
           </div>
         </div>
       </nav>
-      <div class="content"> 
+      <div class="content">
         {% block content %}
-        {% endblock %} 
+        {% endblock %}
       </div>
     </div> <!-- /container -->
     <div class="footer">
-      © MineTurer • <a href="#">Kontakt oss</a> • <a href="#">Informasjon om opphavsrett</a> • <a href="#">Information in English</a>
+      © MineTurer • 
+      <a href="#">Kontakt oss</a> • 
+      <a href="#">Informasjon om opphavsrett</a> • 
+      <a href="#">Information in English</a>
     </div>
+
     {% block templates %}
     {% endblock %}
 
@@ -74,5 +98,6 @@
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
     {% endblock %}
+  
   </body>
 </html>

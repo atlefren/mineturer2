@@ -1,61 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-  
-  <div id="login_form_wrapper">
+  <div class="row">
+        <div class="col-md-6 col-md-offset-1">
 
-    <!--<form id="registerUserForm" action="createMyUser" method="POST" accept-charset="UTF-8">-->
-    <form action="" method=post class="form-horizontal" role="form">  
+            <p>Her kan du opprette en profil på MineTurer. Bare fyll inn 
+               informasjonen under og trykk "opprett bruker, så blir du logget 
+               rett inn med den nye brukeren din.
+           </p>
 
-      <div class="form-group">
-        <label for="inputUsername" class="col-sm-2 control-label">&Oslash;nsket brukernavn</label>
-        <div class="col-sm-10">
-          <input type="text" name="username" id="inputUsername" required/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="inputPassword" class="col-sm-2 control-label">&Oslash;nsket passord</label>
-        <div class="col-sm-10">
-          <input type="password" name="password" id="inputPassword" required/>
-        </div>
-      </div>    
+            <form action="" method=post class="form-horizontal" role="form">  
+                {% include("user_form.html") %}    
+                <button class="btn btn-primary" type="submit" id="register">
+                    Opprett bruker
+                </button>
+            </form>
 
-      <div class="form-group">
-        <label for="inputPassword2" class="col-sm-2 control-label">Gjenta passord</label>
-        <div class="col-sm-10">
-          <input type="password" name="password2" id="inputPassword2" required/>
-        </div>
-      </div>    
+            <p>OBS: Det finnes (enda) ikke noen metode for å resette glemt 
+                passord (og passord lagres salta og hasha), så pass på å huske 
+                passordet du velger (du får det heller ikke på mail).
+            </p>
 
-      <div class="form-group">
-        <label for="inputFullname" class="col-sm-2 control-label">Fullt navn</label>
-        <div class="col-sm-10">
-          <input type="text" name="fullname" id="inputFullname" required/>
-        </div>
-      </div>    
-      
-      <div class="form-group">
-        <label for="inputEmail" class="col-sm-2 control-label">E-post</label>
-        <div class="col-sm-10">
-          <input type="email" name="email" id="inputEmail" required/>
-        </div>
-      </div>    
-  
-      <button class="btn btn-primary" type="submit" id="register">Opprett bruker</button>
-
-    </form>
-
-    <p><span class="text_red">*</span>=Påkrevd felt.</p>
-    <p>OBS: Det finnes (enda) ikke noen metode for å endre passord/glemt passord (og passord lagres kryptert), så pass på å huske passordet du velger (du får det heller ikke på mail).</p>
-
-    <div class="error hidden" id="error">
-      <p>Passordet må ha minst 8 tegn</p>
-      <p>Du må fylle inn e-postadresse</p>
-    </div>
-
-    <div class="hidden" id="info">test</div>
-
-  </div> <!-- div#login_form_wrapper -->
-
-
-
+        </div> 
+    </div> 
 {% endblock %}

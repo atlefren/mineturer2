@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+
+            <p>Her kan du redigere profilen din.</p>
+
+            {% include("flash_success.html") %}
+
+            <form action="" method=post class="form-horizontal" role="form">  
+                {% include("user_form.html") %}    
+                <button class="btn btn-primary" type="submit">
+                    Lagre profil
+                </button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

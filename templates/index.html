@@ -2,6 +2,7 @@
 
 {% block content %}
 <h2>Test</h2>
+{% include("flash_success.html") %}
 
 {% if g.user.is_authenticated()%}  
 <p>Logget inn</p>

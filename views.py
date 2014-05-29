@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 
-from flask import render_template, g
+from flask import render_template, g, request, current_app, flash
 from flask.ext.login import login_required, current_user
 
 from login_views import create_login_views
@@ -19,9 +19,35 @@ def create_views(app):
     def index():
         return render_template('index.html')
 
-    @app.route('/editprofile')
+    @app.route('/editprofile', methods=['GET', 'POST'])
     def editprofile():
-        return render_template('index.html')
+        if request.method == 'GET':
+            return render_template(
+                'editprofile.html',
+                user=current_user,
+                errors={},
+                edit=True
+            )
+
+        if request.form['password'] and request.form['password'] != '':
+            current_user.set_password(
+                request.form['password'],
+                request.form['password2']
+            )
+        current_user.email = request.form['email'],
+        current_user.fullname = request.form['fullname']
+
+        if current_user.validate():
+            current_app.db_session.add(current_user)
+            current_app.db_session.commit()
+            flash('Profilen ble oppdatert!')
+
+        return render_template(
+            'editprofile.html',
+            errors=current_user.validation_errors,
+            user=current_user,
+            edit=True
+        )
 
     @app.route('/trips', methods=['GET', 'POST'])
     @login_required

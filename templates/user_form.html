@@ -1,0 +1,78 @@
+<div class="form-group {% if errors.username %}has-error{% endif %}">
+    <label for="inputUsername" class="col-sm-2 control-label">Brukernavn</label>
+    <div class="col-sm-10">
+        <input 
+            type="text"
+            name="username"
+            id="inputUsername"
+            value="{{ user.username or '' }}"
+            required
+            {% if edit %} readonly {% endif %}
+        />
+        {% if errors.username %}
+        <span class="help-block">{{ errors.username }}</span>
+        {% endif %}
+    </div>        
+</div>
+
+<div class="form-group {% if errors.password %}has-error{% endif %}">
+    <label for="inputPassword" class="col-sm-2 control-label">Passord</label>
+    <div class="col-sm-10">
+        <input 
+            type="password" 
+            name="password"
+            id="inputPassword"
+            {% if not edit %} required {% endif %}
+        />
+        {% if errors.password %}
+        <span class="help-block">{{ errors.password }}</span>
+        {% endif %}
+    </div>
+</div>    
+
+<div class="form-group {% if errors.password2 %}has-error{% endif %}">
+    <label for="inputPassword2" class="col-sm-2 control-label">Gjenta passord</label>
+    <div class="col-sm-10">
+        <input
+            type="password"
+            name="password2"
+            id="inputPassword2"
+            {% if not edit %} required {% endif %}
+        />
+          {% if errors.password2 %}
+          <span class="help-block">{{ errors.password2 }}</span>
+          {% endif %}
+    </div>
+</div>    
+
+<div class="form-group {% if errors.fullname %}has-error{% endif %}">
+    <label for="inputFullname" class="col-sm-2 control-label">Fullt navn</label>
+    <div class="col-sm-10">
+        <input 
+            type="text"
+            name="fullname"
+            id="inputFullname"
+            value="{{ user.fullname or '' }}"
+            required
+        />
+        {% if errors.fullname %}
+        <span class="help-block">{{ errors.fullname }}</span>
+        {% endif %}
+    </div>
+</div>    
+      
+<div class="form-group {% if errors.email %}has-error{% endif %}">
+    <label for="inputEmail" class="col-sm-2 control-label">E-post</label>
+    <div class="col-sm-10">
+        <input
+            type="email"
+            name="email"
+            id="inputEmail"
+            value="{{ user.email or '' }}"
+            required
+        />
+        {% if errors.email %}
+        <span class="help-block">{{ errors.email }}</span>
+        {% endif %}
+    </div>
+</div>

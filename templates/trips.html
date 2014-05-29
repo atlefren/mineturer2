@@ -11,7 +11,6 @@
   <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets %}
 
-
   <script type="text/javascript">
 
     (function () {
@@ -31,22 +30,21 @@
 
 {% block content %}
 <div class="row">
-  <div id="triplist" class="col-md-3">    
-  </div>
-  <div class="col-md-9">
-    <div class="map">
-    </div>
-  </div>
+    <div id="triplist" class="col-md-3">    
+</div>
+<div class="col-md-9">
+    <div class="map"></div>
+</div>
 {% endblock %}
 
 {% block templates %}
 {{ super() }} 
 
 <script type="text/template" id="triplistitem_template">
-  <a href="#<%= id %>" class="list-group-item trip-item <%= type%>">        
+    <a href="#<%= id %>" class="list-group-item trip-item <%= type%>">        
         <h4 class="list-group-item-heading"><%= title %></h4>
         <p class="list-group-item-text"><%= date %></p>  
-      </a>
+    </a>
 </script>
 
 {% endblock %}
