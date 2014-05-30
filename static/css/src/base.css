@@ -81,12 +81,15 @@ div.footer {
 
 #triplist_container {
     overflow: hidden;
-    height: 455px;
+    height: 555px;
 }
 
-.triplist {
+.triplist > a:not(:last-child) { 
+    margin-bottom: 10px;
+}
 
-    
+.list-group-item {
+    border-radius: 4px;    
 }
 
 .trip-item {
@@ -147,7 +150,7 @@ div.footer {
 
 .map {
     background: #F8F8F8;
-    min-height: 500px;
+    min-height: 600px;
     border-radius: 6px;
 }
 
