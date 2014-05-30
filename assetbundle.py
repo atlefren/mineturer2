@@ -51,6 +51,7 @@ triplist_js = Bundle(
     'js/lib/backbone-min.js',
     'js/lib/leaflet.js',
     'js/lib/SpatialBB.min.js',
+    'js/lib/moment-with-langs.min.js',
     Bundle(
         'js/src/triplist.js',
         'js/src/scroller.js',

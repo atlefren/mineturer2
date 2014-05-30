@@ -2,6 +2,8 @@ var MT = this.MT || {};
 (function (ns) {
     'use strict';
 
+    moment.lang('nb');
+
     var Trip = SpatialBB.MarkerModel.extend({
 
         defaults: {
@@ -39,6 +41,13 @@ var MT = this.MT || {};
             if (e.type === 'click') {
                 console.log('click!', this.id);
             }
+        },
+
+        toDisplay: function () {
+            return _.extend(
+                this.toJSON(),
+                {date: moment(this.get('date')).format('D. MMMM YYYY')}
+            );
         }
 
     });
@@ -69,7 +78,7 @@ var MT = this.MT || {};
         },
 
         render: function () {
-            this.setElement(_.template(this.template, this.model.toJSON()));
+            this.setElement(_.template(this.template, this.model.toDisplay()));
             return this;
         },
 
