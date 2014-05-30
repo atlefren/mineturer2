@@ -36,120 +36,120 @@ var MT = this.MT || {};
 
         createMarker: function (position) {
 
-         if (position) {
+            if (position) {
                 this.marker = new L.Marker(
-                    [position.lat, position.lon], 
+                    [position.lat, position.lon],
                     {
                         icon: createIcon(this.get('type')),
                         title: this.get('title')
                     }
-                );                
+                );
                 this.marker.on('mouseover', this.markerEvent, this);
                 this.marker.on('mouseout', this.markerEvent, this);
                 this.marker.on('click', this.markerEvent, this);
-            }   
+            }
         },
 
-    markerEvent: function (e) {
-        if (e.type === 'mouseover') {
-            this.set('highlighted', true);
-        }
+        markerEvent: function (e) {
+            if (e.type === 'mouseover') {
+                this.set('highlighted', true);
+            }
 
-        if (e.type === 'mouseout') {
-            this.set('highlighted', false);
-        }
+            if (e.type === 'mouseout') {
+                this.set('highlighted', false);
+            }
 
-        if (e.type === 'click') {
-            console.log('click!', this.id);
-        }
-    },
+            if (e.type === 'click') {
+                console.log('click!', this.id);
+            }
+        },
 
-    toDisplay: function () {
-        return _.extend(
-            this.toJSON(),
-            {date: moment(this.get('date')).format('D. MMMM YYYY')}
+        toDisplay: function () {
+            return _.extend(
+                this.toJSON(),
+                {date: moment(this.get('date')).format('D. MMMM YYYY')}
             );
-    }
-
-});
-
-ns.Trips = SpatialBB.MarkerCollection.extend({
-
-    model: Trip,
-
-    getLayerGroup: function () {
-        if (!this.layerGroup.getLayers().length) {
-            this.each(this.modelAdded, this);
         }
-        return this.layerGroup;
-    }
-});
 
-var TripItemView = Backbone.View.extend({
+    });
 
-    template: $('#triplistitem_template').html(),
+    ns.Trips = SpatialBB.MarkerCollection.extend({
 
-    events: {
-        'mouseenter': 'mouseenter',
-        'mouseleave': 'mouseleave',
-    },
+        model: Trip,
 
-    initialize: function () {
-        this.model.on('change:highlighted', this.changeHighlight, this);
-    },
-
-    render: function () {
-        this.setElement(_.template(this.template, this.model.toDisplay()));
-        return this;
-    },
-
-    mouseenter: function () {
-        this.model.set('highlighted', true);
-    },
-
-    mouseleave: function () {
-        this.model.set('highlighted', false);
-    },
-
-    changeHighlight: function () {
-        if (this.model.get('highlighted')) {
-            this.$el.addClass('highlighted');
-        } else {
-            this.$el.removeClass('highlighted');
+        getLayerGroup: function () {
+            if (!this.layerGroup.getLayers().length) {
+                this.each(this.modelAdded, this);
+            }
+            return this.layerGroup;
         }
-    }
+    });
 
-});
+    var TripItemView = Backbone.View.extend({
 
-ns.TripListView = Backbone.View.extend({
+        template: $('#triplistitem_template').html(),
 
-    className: 'list-group triplist',
+        events: {
+            'mouseenter': 'mouseenter',
+            'mouseleave': 'mouseleave',
+        },
 
-    render: function () {
+        initialize: function () {
+            this.model.on('change:highlighted', this.changeHighlight, this);
+        },
 
-        this.$el.append(this.collection.map(function (trip) {
-            return new TripItemView({model: trip}).render().$el;
-        }));
+        render: function () {
+            this.setElement(_.template(this.template, this.model.toDisplay()));
+            return this;
+        },
 
-        return this;
-    }
-});
+        mouseenter: function () {
+            this.model.set('highlighted', true);
+        },
 
-ns.createMap = function (div, trips) {
+        mouseleave: function () {
+            this.model.set('highlighted', false);
+        },
 
-    L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
-
-    var map = L.map(div[0]).setView([64.5, 15], 5);
-
-    L.tileLayer(
-        'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
-        {
-            attribution: "&copy; <a href='http://statkart.no'>Kartverket</a>"
+        changeHighlight: function () {
+            if (this.model.get('highlighted')) {
+                this.$el.addClass('highlighted');
+            } else {
+                this.$el.removeClass('highlighted');
+            }
         }
+
+    });
+
+    ns.TripListView = Backbone.View.extend({
+
+        className: 'list-group triplist',
+
+        render: function () {
+
+            this.$el.append(this.collection.map(function (trip) {
+                return new TripItemView({model: trip}).render().$el;
+            }));
+
+            return this;
+        }
+    });
+
+    ns.createMap = function (div, trips) {
+
+        L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
+
+        var map = L.map(div[0]).setView([64.5, 15], 5);
+
+        L.tileLayer(
+            'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
+            {
+                attribution: "&copy; <a href='http://statkart.no'>Kartverket</a>"
+            }
         ).addTo(map);
-    var lg = trips.getLayerGroup();
+        var lg = trips.getLayerGroup();
 
-    map.addLayer(lg);
-};
+        map.addLayer(lg);
+    };
 
 }(MT));
