@@ -2,6 +2,7 @@
 import hashlib
 import bcrypt
 
+
 from sqlalchemy import (Column, Integer, String, Text, Boolean, DateTime,
                         Numeric, ForeignKey)
 from sqlalchemy.orm import relationship
@@ -9,6 +10,17 @@ from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape
 
 from database import Base
+
+
+def serialize_trip(trip, first_point):
+    start = to_shape(first_point.geom)
+    return {
+        'position': {'lon': start.x, 'lat': start.y},
+        'id': trip.id,
+        'type': trip.type,
+        'date': trip.start.isoformat(),
+        'title': trip.title
+    }
 
 
 class User(Base):
@@ -111,7 +123,12 @@ class Trip(Base):
     type = Column('triptype', String)
     userid = Column(Integer, ForeignKey('mineturer.users.userid'))
     user = relationship(User, primaryjoin=userid == User.id)
-    points = relationship('Point', backref='mineturer.trips', lazy='dynamic')
+    points = relationship(
+        'Point',
+        backref='mineturer.trips',
+        order_by='desc(Point.time)',
+        lazy='dynamic'
+    )
 
     def serialize(self):
         start = to_shape(self.points.first().geom)

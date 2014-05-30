@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 
-
 from flask import (render_template, g, request, current_app, flash, redirect,
                    url_for)
 from flask.ext.login import login_required, current_user
+
 
 from login_views import create_login_views
 
@@ -56,8 +56,5 @@ def create_views(app):
     @app.route('/trips', methods=['GET', 'POST'])
     @login_required
     def trips():
-
-        #TODO: this is somewhat slow!
         trips = [trip.serialize() for trip in current_user.trips]
-
         return render_template('trips.html', trips=json.dumps(trips))
