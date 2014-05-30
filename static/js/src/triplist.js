@@ -3,6 +3,44 @@ var MT = MT || {};
     'use strict';
 
     var Trip = SpatialBB.MarkerModel.extend({
+
+        defaults: {
+            'highlighted': false
+        },
+
+        initialize: function () {
+            this.on('change:highlighted', this.highlightedChange, this);
+        },
+
+        highlightedChange: function () {
+            if (this.get('highlighted')) {
+                this.marker.setZIndexOffset(1000);
+            } else {
+                this.marker.setZIndexOffset(0);
+            }
+        },
+
+        createMarker: function () {
+            SpatialBB.MarkerModel.prototype.createMarker.apply(this, arguments);
+            this.marker.on('mouseover', this.markerEvent, this);
+            this.marker.on('mouseout', this.markerEvent, this);
+            this.marker.on('click', this.markerEvent, this);
+        },
+
+        markerEvent: function (e) {
+            if (e.type === 'mouseover') {
+                this.set('highlighted', true);
+            }
+
+            if (e.type === 'mouseout') {
+                this.set('highlighted', false);
+            }
+
+            if (e.type === 'click') {
+                console.log('click!', this.id);
+            }
+        }
+
     });
 
     ns.Trips = SpatialBB.MarkerCollection.extend({
@@ -21,16 +59,41 @@ var MT = MT || {};
 
         template: $('#triplistitem_template').html(),
 
+        events: {
+            'mouseenter': 'mouseenter',
+            'mouseleave': 'mouseleave',
+        },
+
+        initialize: function () {
+            this.model.on('change:highlighted', this.changeHighlight, this);
+        },
+
         render: function () {
             this.setElement(_.template(this.template, this.model.toJSON()));
             return this;
+        },
+
+        mouseenter: function () {
+            this.model.set('highlighted', true);
+        },
+
+        mouseleave: function () {
+            this.model.set('highlighted', false);
+        },
+
+        changeHighlight: function () {
+            if (this.model.get('highlighted')) {
+                this.$el.addClass('highlighted');
+            } else {
+                this.$el.removeClass('highlighted');
+            }
         }
 
     });
 
     ns.TripListView = Backbone.View.extend({
 
-        className: 'list-group',
+        className: 'list-group triplist',
 
         render: function () {
 

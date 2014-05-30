@@ -30,7 +30,7 @@
 <div class="row">
     <div id="triplist" class="col-md-3">    
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9" style="position: relative;">
         <div class="map"></div>
     </div>
 </div>
@@ -40,7 +40,7 @@
 {{ super() }} 
 
 <script type="text/template" id="triplistitem_template">
-    <a href="#<%= id %>" class="list-group-item trip-item <%= type%>">        
+    <a href="/trips/<%= id %>" class="list-group-item trip-item <%= type%>">        
         <h4 class="list-group-item-heading"><%= title %></h4>
         <p class="list-group-item-text"><%= date %></p>  
     </a>

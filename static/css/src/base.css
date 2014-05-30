@@ -79,10 +79,19 @@ div.footer {
 
 /*triplist*/
 
+.triplist {
+    height: 300px;
+    overflow: hidden; 
+}
+
 .trip-item {
     padding-left: 50px;
     background-repeat: no-repeat;
     background-position: 5px;
+}
+
+.highlighted {
+    background-color: #f5f5f5;
 }
 
 .nordicski {   
