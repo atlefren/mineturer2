@@ -4,6 +4,18 @@ var MT = this.MT || {};
 
     moment.lang('nb');
 
+    function createIcon(type) {
+        return L.icon({
+            iconUrl: '/static/images/icons/' + type + '.png',
+            //shadowUrl: 'leaf-shadow.png',
+            iconSize:     [32, 37], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [15, 34], // point of the icon which will correspond to marker's location
+            //shadowAnchor: [4, 62],  // the same for the shadow
+            //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+    }
+
     var Trip = SpatialBB.MarkerModel.extend({
 
         defaults: {
@@ -22,113 +34,122 @@ var MT = this.MT || {};
             }
         },
 
-        createMarker: function () {
-            SpatialBB.MarkerModel.prototype.createMarker.apply(this, arguments);
-            this.marker.on('mouseover', this.markerEvent, this);
-            this.marker.on('mouseout', this.markerEvent, this);
-            this.marker.on('click', this.markerEvent, this);
+        createMarker: function (position) {
+
+         if (position) {
+                this.marker = new L.Marker(
+                    [position.lat, position.lon], 
+                    {
+                        icon: createIcon(this.get('type')),
+                        title: this.get('title')
+                    }
+                );                
+                this.marker.on('mouseover', this.markerEvent, this);
+                this.marker.on('mouseout', this.markerEvent, this);
+                this.marker.on('click', this.markerEvent, this);
+            }   
         },
 
-        markerEvent: function (e) {
-            if (e.type === 'mouseover') {
-                this.set('highlighted', true);
-            }
+    markerEvent: function (e) {
+        if (e.type === 'mouseover') {
+            this.set('highlighted', true);
+        }
 
-            if (e.type === 'mouseout') {
-                this.set('highlighted', false);
-            }
+        if (e.type === 'mouseout') {
+            this.set('highlighted', false);
+        }
 
-            if (e.type === 'click') {
-                console.log('click!', this.id);
-            }
-        },
+        if (e.type === 'click') {
+            console.log('click!', this.id);
+        }
+    },
 
-        toDisplay: function () {
-            return _.extend(
-                this.toJSON(),
-                {date: moment(this.get('date')).format('D. MMMM YYYY')}
+    toDisplay: function () {
+        return _.extend(
+            this.toJSON(),
+            {date: moment(this.get('date')).format('D. MMMM YYYY')}
             );
+    }
+
+});
+
+ns.Trips = SpatialBB.MarkerCollection.extend({
+
+    model: Trip,
+
+    getLayerGroup: function () {
+        if (!this.layerGroup.getLayers().length) {
+            this.each(this.modelAdded, this);
         }
+        return this.layerGroup;
+    }
+});
 
-    });
+var TripItemView = Backbone.View.extend({
 
-    ns.Trips = SpatialBB.MarkerCollection.extend({
+    template: $('#triplistitem_template').html(),
 
-        model: Trip,
+    events: {
+        'mouseenter': 'mouseenter',
+        'mouseleave': 'mouseleave',
+    },
 
-        getLayerGroup: function () {
-            if (!this.layerGroup.getLayers().length) {
-                this.each(this.modelAdded, this);
-            }
-            return this.layerGroup;
+    initialize: function () {
+        this.model.on('change:highlighted', this.changeHighlight, this);
+    },
+
+    render: function () {
+        this.setElement(_.template(this.template, this.model.toDisplay()));
+        return this;
+    },
+
+    mouseenter: function () {
+        this.model.set('highlighted', true);
+    },
+
+    mouseleave: function () {
+        this.model.set('highlighted', false);
+    },
+
+    changeHighlight: function () {
+        if (this.model.get('highlighted')) {
+            this.$el.addClass('highlighted');
+        } else {
+            this.$el.removeClass('highlighted');
         }
-    });
+    }
 
-    var TripItemView = Backbone.View.extend({
+});
 
-        template: $('#triplistitem_template').html(),
+ns.TripListView = Backbone.View.extend({
 
-        events: {
-            'mouseenter': 'mouseenter',
-            'mouseleave': 'mouseleave',
-        },
+    className: 'list-group triplist',
 
-        initialize: function () {
-            this.model.on('change:highlighted', this.changeHighlight, this);
-        },
+    render: function () {
 
-        render: function () {
-            this.setElement(_.template(this.template, this.model.toDisplay()));
-            return this;
-        },
+        this.$el.append(this.collection.map(function (trip) {
+            return new TripItemView({model: trip}).render().$el;
+        }));
 
-        mouseenter: function () {
-            this.model.set('highlighted', true);
-        },
+        return this;
+    }
+});
 
-        mouseleave: function () {
-            this.model.set('highlighted', false);
-        },
+ns.createMap = function (div, trips) {
 
-        changeHighlight: function () {
-            if (this.model.get('highlighted')) {
-                this.$el.addClass('highlighted');
-            } else {
-                this.$el.removeClass('highlighted');
-            }
+    L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
+
+    var map = L.map(div[0]).setView([64.5, 15], 5);
+
+    L.tileLayer(
+        'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
+        {
+            attribution: "&copy; <a href='http://statkart.no'>Kartverket</a>"
         }
-
-    });
-
-    ns.TripListView = Backbone.View.extend({
-
-        className: 'list-group triplist',
-
-        render: function () {
-
-            this.$el.append(this.collection.map(function (trip) {
-                return new TripItemView({model: trip}).render().$el;
-            }));
-
-            return this;
-        }
-    });
-
-    ns.createMap = function (div, trips) {
-
-        L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
-
-        var map = L.map(div[0]).setView([64.5, 15], 5);
-
-        L.tileLayer(
-            'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
-            {
-                attribution: "&copy; <a href='http://statkart.no'>Kartverket</a>"
-            }
         ).addTo(map);
-        var lg = trips.getLayerGroup();
+    var lg = trips.getLayerGroup();
 
-        map.addLayer(lg);
-    };
+    map.addLayer(lg);
+};
 
 }(MT));
