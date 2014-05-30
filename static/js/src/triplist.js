@@ -1,4 +1,4 @@
-var MT = MT || {};
+var MT = this.MT || {};
 (function (ns) {
     'use strict';
 

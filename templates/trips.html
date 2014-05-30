@@ -13,13 +13,15 @@
 
   <script type="text/javascript">
     (function () {
-      var trips = new MT.Trips({{trips | safe}} , {requirePosition: true});
+        var trips = new MT.Trips({{trips | safe}} , {requirePosition: true});
 
-      $('#triplist').html(
-        new MT.TripListView({collection: trips}).render().$el
-      );
+        $('#triplist_container').html(
+            new MT.TripListView({collection: trips}).render().$el
+        );
       
-      MT.createMap($('.map'), trips);
+        MT.createMap($('.map'), trips);
+
+        new MT.Scroller({el: $('#tripcolumn')}).render();
 
     }());    
   </script>
@@ -28,7 +30,18 @@
 
 {% block content %}
 <div class="row">
-    <div id="triplist" class="col-md-3">    
+    <div id="tripcolumn" class="col-md-3">
+        <div id="triplist_container"></div>  
+        <div class="text-center">
+            <div class="btn-group">
+                <button id="newer" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-up"></span> Nyere
+                </button>        
+                <button id="older" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-down"></span> Eldre
+                </button>        
+            </div>
+        </div>
     </div>
     <div class="col-md-9" style="position: relative;">
         <div class="map"></div>

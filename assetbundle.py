@@ -53,6 +53,7 @@ triplist_js = Bundle(
     'js/lib/SpatialBB.min.js',
     Bundle(
         'js/src/triplist.js',
+        'js/src/scroller.js',
         filters=js_filters,
     ),
     output='gen/js/triplist_js.js'

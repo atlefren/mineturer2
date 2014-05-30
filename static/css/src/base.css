@@ -79,9 +79,14 @@ div.footer {
 
 /*triplist*/
 
+#triplist_container {
+    overflow: hidden;
+    height: 455px;
+}
+
 .triplist {
-    height: 300px;
-    overflow: hidden; 
+
+    
 }
 
 .trip-item {
