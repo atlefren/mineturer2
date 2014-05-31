@@ -32,6 +32,7 @@ login = Bundle(
 base_js = Bundle(
     'js/lib/jquery-1.11.1.min.js',
     'js/lib/bootstrap.min.js',
+    'js/lib/underscore-min.js',
     output='gen/js/libs.js'
 )
 
@@ -45,15 +46,22 @@ map_css = Bundle(
     output='gen/js/triplist.css'
 )
 
+map_js = Bundle(
+    'js/lib/leaflet.js',
+    Bundle(
+        'js/src/map.js',
+        filters=js_filters,
+    ),
+    output='gen/js/map_js.js'
+)
+
 triplist_js = Bundle(
     base_js,
-    'js/lib/underscore-min.js',
     'js/lib/backbone-min.js',
-    'js/lib/leaflet.js',
+    map_js,
     'js/lib/SpatialBB.min.js',
     'js/lib/moment-with-langs.min.js',
     Bundle(
-        'js/src/map.js',
         'js/src/triplist.js',
         'js/src/scroller.js',
         filters=js_filters,
@@ -63,10 +71,6 @@ triplist_js = Bundle(
 
 tripdetail_js = Bundle(
     base_js,
-    'js/lib/leaflet.js',
-    Bundle(
-        'js/src/map.js',
-        filters=js_filters,
-    ),
+    map_js,
     output='gen/js/tripdetail_js.js'
 )
