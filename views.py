@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
-import moment
 
+import arrow
 from flask import (render_template, g, request, current_app, flash, redirect,
                    url_for, abort)
 from flask.ext.login import login_required, current_user
@@ -18,8 +18,8 @@ def create_views(app):
 
         # TODO: fix format to norwegian with no leadign zero
         if format is None:
-            format = 'D MMMM YYYY'
-        return moment.date(date).format(format)
+            format = 'D. MMMM YYYY'
+        return arrow.get(date).format(format, locale='nb')
 
     create_login_views(app)
 
