@@ -1,0 +1,88 @@
+<div class="row">
+            <div class="col-md-6">
+                <h4>Tidsbruk</h4>
+                <table class="table table-condensed tripstats">
+                    <tr>
+                        <th>Starttid</th>
+                        <td>{{trip.stats.start}}</th>
+                    </tr>
+                    <tr>
+                        <th>Slutttid</th>
+                        <td>{{trip.stats.stop}}</th>
+                    </tr>
+                    <tr>
+                        <th>Total tid</th>
+                        <td>{{trip.stats.total_time}}</th>
+                    </tr>
+                    <tr>
+                        <th>Aktiv tid</th>
+                        <td>{{trip.stats.active_time}}</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h4>Lengde</h4>
+                <table class="table table-condensed  tripstats">
+                    <tr>
+                        <th>Distanse (2d)</th>
+                        <td>{{trip.stats.length_2d}}</td>
+                    </tr>
+                    <tr>
+                        <th>Distanse (3d)</th>
+                        <td>{{trip.stats.length_3d}}</td>
+                    </tr>
+                    <tr>
+                        <th>Snittfart</th>
+                        <td>{{trip.stats.avg_speed}}</td>
+                    </tr>
+                    <tr>
+                        <th>Snittfart uten pauser</th>
+                        <td>{{trip.stats.avg_moving_speed}}</td>
+                    </tr>
+                </table>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Type terreng</h4>    
+                <table class="table table-condensed tripstats">
+                    <tr>
+                        <th>Oppstigning</th>
+                        <td>{{trip.stats.ascent}}</th>
+                    </tr>
+                    <tr>
+                        <th>Nedstigning</th>
+                        <td>{{trip.stats.descent}}</th>
+                    </tr>
+                    <tr>
+                        <th>Flatt terreng</th>
+                        <td>{{trip.stats.flat}}</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h4>Høyde</h4>
+                <table class="table table-condensed tripstats">
+                    <tr>
+                        <th>Maks høyde</th>
+                        <td>{{trip.stats.max_height}}</td>
+                    </tr>
+                    <tr>
+                        <th>Min høyde</th>
+                        <td>{{trip.stats.min_height}}</td>
+                    </tr>
+                    <tr>
+                        <th>Total oppstigning</th>
+                        <td>{{trip.stats.avg_speed}}</td>
+                    </tr>
+                    <tr>
+                        <th>Total nedstigning</th>
+                        <td>{{trip.stats.total_ascent}}</td>
+                    </tr>
+                    <tr>
+                        <th>Høydeforskjell</th>
+                        <td>{{trip.stats.elev_diff}}</td>
+                    </tr>
+                </table>                
+            </div>
+        </div>        

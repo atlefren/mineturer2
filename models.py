@@ -8,19 +8,9 @@ from sqlalchemy import (Column, Integer, String, Text, Boolean, DateTime,
 from sqlalchemy.orm import relationship
 from geoalchemy2.types import Geometry
 from geoalchemy2.shape import to_shape
+from shapely.geometry import LineString
 
 from database import Base
-
-
-def serialize_trip(trip, first_point):
-    start = to_shape(first_point.geom)
-    return {
-        'position': {'lon': start.x, 'lat': start.y},
-        'id': trip.id,
-        'type': trip.type,
-        'date': trip.start.isoformat(),
-        'title': trip.title
-    }
 
 
 class User(Base):
@@ -131,13 +121,43 @@ class Trip(Base):
     )
 
     def serialize(self):
-        start = to_shape(self.points.first().geom)
         return {
-            'position': {'lon': start.x, 'lat': start.y},
             'id': self.id,
             'type': self.type,
             'date': self.start.isoformat(),
             'title': self.title
+        }
+
+    def serialize_with_point(self):
+        data = self.serialize()
+        start = to_shape(self.points.first().geom)
+        data['position'] = {'lon': start.x, 'lat': start.y}        
+        return data
+
+    @property
+    def geom(self):
+        points = [to_shape(point.geom) for point in self.points.all()]
+        return  LineString(points)
+
+    @property
+    def stats(self):
+        return {
+            'start': '10.02.2013, kl 11:08',
+            'stop': '10.02.2013, kl 12:26',
+            'total_time': '1t 18m 1s',
+            'active_time': '1t 13m 43s',
+            'length_2d': '13.65 km',
+            'length_3d': '13.92 km',
+            'avg_speed': '10.71 km/t',
+            'avg_moving_speed': '11.33 km/t',
+            'ascent': '5.75 km, 0t 36m 21s, 9.5 km/t',
+            'descent': '7.1 km, 0t 30m 42s, 13.89 km/t',
+            'flat': '1.06 km, 0t 6m 40s, 9.57 km/t',
+            'max_height': '476.1 m.o.h.',
+            'min_height': '109.2 m.o.h.',
+            'total_ascent': '1081.2 m',
+            'total_descent': '861.8 m',
+            'elev_diff': '366.9 m',
         }
 
     def __repr__(self):

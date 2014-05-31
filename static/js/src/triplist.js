@@ -60,7 +60,7 @@ var MT = this.MT || {};
             }
 
             if (e.type === 'click') {
-                console.log('click!', this.id);
+                window.location = '/trips/' + this.get('id');
             }
         },
 
@@ -135,18 +135,11 @@ var MT = this.MT || {};
         }
     });
 
-    ns.createMap = function (div, trips) {
+    ns.createListMap = function (div, trips) {
 
         L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
 
-        var map = L.map(div[0]).setView([64.5, 15], 5);
-
-        L.tileLayer(
-            'http://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}',
-            {
-                attribution: "&copy; <a href='http://statkart.no'>Kartverket</a>"
-            }
-        ).addTo(map);
+        var map = ns.createMap(div);
         var lg = trips.getLayerGroup();
 
         map.addLayer(lg);

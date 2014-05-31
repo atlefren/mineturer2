@@ -43,6 +43,25 @@ div.header {
 
 /* end header */
 
+/* bootstrap override */
+.navbar {
+    margin-bottom: 0;
+}
+
+.dl-horizontal dt {
+    clear: left;
+    float: left;
+    text-align: left;
+    width: 130px;
+    overflow: visible;
+    white-space: normal;
+}
+
+.dl-horizontal dd {
+    margin-left: 110px;
+}
+
+/* end bootstrap override */
 
 /* buttons */
 .btn-ok, .btn-alert {
@@ -77,6 +96,32 @@ div.footer {
     text-align: center;
 }
 
+
+/*trip detail*/
+
+table.tripstats td {
+    text-align: right;
+}
+
+.tripactions {
+    background-color: #F5F5F5;
+    border-radius: 4px;
+    list-style: none outside none;
+    margin-bottom: 20px;
+    padding: 8px 15px;
+}
+
+.tripactions > li {
+    display: inline-block;
+    margin-right: 15px;    
+}
+
+.tripactions a {
+    color:  #333333;
+}
+
+/*end trip detail*/
+
 /*triplist*/
 
 #triplist_container {
@@ -96,6 +141,12 @@ div.footer {
     padding-left: 50px;
     background-repeat: no-repeat;
     background-position: 5px;
+}
+
+.tripheader {
+    padding-left: 45px;
+    background-repeat: no-repeat;
+    background-position: 5px;   
 }
 
 .highlighted {

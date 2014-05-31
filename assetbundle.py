@@ -35,7 +35,7 @@ base_js = Bundle(
     output='gen/js/libs.js'
 )
 
-triplist_css = Bundle(
+map_css = Bundle(
     base_css,
     Bundle(
         'css/lib/leaflet-0.7.3/leaflet.css',
@@ -53,9 +53,20 @@ triplist_js = Bundle(
     'js/lib/SpatialBB.min.js',
     'js/lib/moment-with-langs.min.js',
     Bundle(
+        'js/src/map.js',
         'js/src/triplist.js',
         'js/src/scroller.js',
         filters=js_filters,
     ),
     output='gen/js/triplist_js.js'
+)
+
+tripdetail_js = Bundle(
+    base_js,
+    'js/lib/leaflet.js',
+    Bundle(
+        'js/src/map.js',
+        filters=js_filters,
+    ),
+    output='gen/js/tripdetail_js.js'
 )

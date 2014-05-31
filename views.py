@@ -2,10 +2,11 @@
 import json
 
 from flask import (render_template, g, request, current_app, flash, redirect,
-                   url_for)
+                   url_for, abort)
 from flask.ext.login import login_required, current_user
+from shapely.geometry import mapping
 
-
+from models import Trip
 from login_views import create_login_views
 
 
@@ -53,8 +54,20 @@ def create_views(app):
             edit=True
         )
 
-    @app.route('/trips', methods=['GET', 'POST'])
+    @app.route('/trips')
     @login_required
     def trips():
-        trips = [trip.serialize() for trip in current_user.trips]
+        trips = [trip.serialize_with_point() for trip in current_user.trips]
         return render_template('trips.html', trips=json.dumps(trips))
+
+    @app.route('/trips/<int:id>')
+    def trip_detail(id):
+
+        trip = current_app.db_session.query(Trip).get(id)
+        if not trip:
+            abort(404)        
+        return render_template(
+            'trip_detail.html',
+            trip=trip,
+            geom=json.dumps(mapping(trip.geom))
+        )

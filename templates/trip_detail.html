@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block css %}
+    {% assets "map_css" %}        
+    <link href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+{% endblock %}
+
+{% block js %}
+  {% assets "tripdetail_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+
+  <script type="text/javascript">
+    (function () {
+        console.log()
+        var map = MT.createMap($('.map'));
+
+        var layer = L.geoJson({{geom | safe}}).addTo(map);
+
+        map.fitBounds(layer.getBounds());        
+    }());    
+  </script>
+
+{% endblock %}
+
+{% block content %}
+
+ <div class="row">    
+    <div class="col-md-6"><!-- left column -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="tripheader {{trip.type}}">{{trip.title}}</h2>                                
+                <div class="well">
+                    {% if g.user != trip.user %}
+                        <p>Bruker: {{trip.user.fullname}}</p>
+                    {% endif %}
+
+                    {% if trip.description %}
+                    <p>{{trip.description}}</p>
+                    {% endif %}
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>Type tur</th>
+                            <th>Tid</th>
+                            <th>Distanse</th>
+                            <th>Snittfart</th>
+                        </tr>
+                        <tr>
+                            <td>{{trip.type}}</td>
+                            <td>{{trip.stats.total_time}}</td>
+                            <td>{{trip.stats.length_2d}}</td>
+                            <td>{{trip.stats.avg_speed}}</td>
+                        </tr>
+                    </table>
+                </div>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#statistics">
+                                Detaljert statistikk
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="statistics" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            {% include('tripstats.html') %}
+                        </div>
+                    </div>
+                </div>
+                {% if g.user == trip.user %}
+                <ol class="tripactions">
+                    
+                    <li><a href="#share">Del</a></li>
+                    <li><a href="#export">Eksporter</a></li>
+                    <li><a href="#edit">Rediger</a></li>
+                    <li><a href="#delete">Slett</a></li>
+                </ol>
+                {% endif %}   
+            </div>
+        </div>    
+        
+    </div><!-- left column end -->
+    <div class="col-md-6">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#map" data-toggle="tab">Kart</a></li>
+            <li><a href="#graphs" data-toggle="tab">Grafer</a></li>        
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="map">
+                <div class="map"></div>
+            </div>
+            <div class="tab-pane fade" id="graphs">...</div>  
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
