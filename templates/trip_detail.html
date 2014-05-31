@@ -30,7 +30,9 @@
     <div class="col-md-6"><!-- left column -->
         <div class="row">
             <div class="col-md-12">
-                <h2 class="tripheader {{trip.type}}">{{trip.title}}</h2>                                
+                <h2 class="tripheader {{trip.type}}">
+                    {{trip.title}} <small>{{trip.start | strftime}}</small>
+                </h2>                                
                 <div class="well">
                     {% if g.user != trip.user %}
                         <p>Bruker: {{trip.user.fullname}}</p>

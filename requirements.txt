@@ -15,7 +15,12 @@ distribute==0.6.24
 gunicorn==18.0
 itsdangerous==0.24
 jsmin==2.0.9
+moment==0.1.4
 psycopg2==2.5.3
 pycparser==2.10
+python-dateutil==2.2
+pytz==2014.3
+six==1.6.1
+times==0.6.2
 webassets==0.9
 wsgiref==0.1.2

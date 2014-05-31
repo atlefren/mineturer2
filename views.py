@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import moment
 
 from flask import (render_template, g, request, current_app, flash, redirect,
                    url_for, abort)
@@ -11,6 +12,14 @@ from login_views import create_login_views
 
 
 def create_views(app):
+
+    @app.template_filter('strftime')
+    def _jinja2_filter_datetime(date, format=None):
+
+        # TODO: fix format to norwegian with no leadign zero
+        if format is None:
+            format = 'D MMMM YYYY'
+        return moment.date(date).format(format)
 
     create_login_views(app)
 
@@ -65,7 +74,7 @@ def create_views(app):
 
         trip = current_app.db_session.query(Trip).get(id)
         if not trip:
-            abort(404)        
+            abort(404)
         return render_template(
             'trip_detail.html',
             trip=trip,
