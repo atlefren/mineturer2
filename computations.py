@@ -2,6 +2,7 @@
 
 import math
 from itertools import izip, islice
+from datetime import timedelta
 
 from geopy import distance, Point as GpPoint
 from geoalchemy2.shape import to_shape
@@ -25,6 +26,9 @@ def get_stats(points):
 
     total_descent = 0.0
     total_ascent = 0.0
+
+    #total_time = 0.0
+    active_time = 0.0
     for current_point, next_point in izip(points, islice(points, 1, None)):
         distance_2d = vincenty_distance(
             to_shape(current_point.geom),
@@ -35,8 +39,15 @@ def get_stats(points):
             math.pow(distance_2d, 2) + math.pow(distance_vertical, 2)
         )
 
+        delta_time = next_point.time - current_point.time
+        time = delta_time.total_seconds()
+        m = distance_3d / time
+
         total_distance_2d += distance_2d
         total_distance_3d += distance_3d
+
+        if m > 0.1:
+            active_time += time
 
         if distance_vertical == 0.0:
             flat_distance += distance_3d
@@ -57,5 +68,6 @@ def get_stats(points):
         'total_descent': total_descent,
         'total_ascent': total_ascent,
         'max_height': max(heights),
-        'min_height': min(heights)
+        'min_height': min(heights),
+        'active_time': timedelta(seconds=active_time),
     }

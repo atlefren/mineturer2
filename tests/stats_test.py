@@ -45,7 +45,7 @@ class TripStatTest(unittest.TestCase):
         self.assertEquals(stats['start'], '2012-10-10T17:06:27+00:00')
         self.assertEquals(stats['stop'], '2012-10-10T17:45:04+00:00')
         self.assertEquals(stats['total_time'].total_seconds(), 2317.0)
-        #self.assertEquals(stats['active_time'], '38:37')
+        self.assertEquals(stats['active_time'].total_seconds(), 2317.0)
 
     def test_compute_distance(self):
         stats = self.trip.stats
@@ -58,6 +58,7 @@ class TripStatTest(unittest.TestCase):
     def test_compute_speeds(self):
         stats = self.trip.stats
         self.assertEquals(round(stats['avg_speed'], 4), 0.5757)
+        self.assertEquals(round(stats['avg_moving_speed'], 4), 0.5757)
 
     def test_compute_heights(self):
         stats = self.trip.stats

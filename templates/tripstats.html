@@ -16,7 +16,7 @@
                     </tr>
                     <tr>
                         <th>Aktiv tid</th>
-                        <td>{{trip.stats.active_time}}</th>
+                        <td>{{trip.stats.active_time | format_timedelta}}</th>
                     </tr>
                 </table>
             </div>
@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <th>Snittfart uten pauser</th>
-                        <td>{{trip.stats.avg_moving_speed}}</td>
+                        <td>{{trip.stats.avg_moving_speed  | display_speed}}</td>
                     </tr>
                 </table>                
             </div>

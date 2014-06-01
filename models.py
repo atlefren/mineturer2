@@ -163,18 +163,21 @@ class Trip(Base):
             total_time = end_time - start_time
 
             avg_speed = stats['distance_3d'] / total_time.total_seconds()
+            avg_moving_speed = stats['distance_3d'] / \
+                stats['active_time'].total_seconds()
 
             self.stats_dict = {
                 'start': start_time.isoformat(),
                 'stop': end_time.isoformat(),
                 'total_time': total_time,
-                'active_time': '',
+                'active_time': stats['active_time'],
                 'distance_2d': stats['distance_2d'],
                 'distance_3d': stats['distance_3d'],
                 'distance_flat': stats['distance_flat'],
                 'distance_asc': stats['distance_asc'],
                 'distance_desc': stats['distance_desc'],
                 'avg_speed': avg_speed,
+                'avg_moving_speed': avg_moving_speed,
                 'total_descent': stats['total_descent'],
                 'total_ascent': stats['total_ascent'],
                 'max_height': stats['max_height'],
