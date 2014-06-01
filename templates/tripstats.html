@@ -12,7 +12,7 @@
                     </tr>
                     <tr>
                         <th>Total tid</th>
-                        <td>{{trip.stats.total_time}}</th>
+                        <td>{{trip.stats.total_time | format_timedelta}}</th>
                     </tr>
                     <tr>
                         <th>Aktiv tid</th>
@@ -25,15 +25,15 @@
                 <table class="table table-condensed  tripstats">
                     <tr>
                         <th>Distanse (2d)</th>
-                        <td>{{trip.stats.distance_2d}} km</td>
+                        <td>{{trip.stats.distance_2d | display_length}}</td>
                     </tr>
                     <tr>
                         <th>Distanse (3d)</th>
-                        <td>{{trip.stats.distance_3d}} km</td>
+                        <td>{{trip.stats.distance_3d | display_length}}</td>
                     </tr>
                     <tr>
                         <th>Snittfart</th>
-                        <td>{{trip.stats.avg_speed}}</td>
+                        <td>{{trip.stats.avg_speed  | display_speed}}</td>
                     </tr>
                     <tr>
                         <th>Snittfart uten pauser</th>
@@ -48,15 +48,15 @@
                 <table class="table table-condensed tripstats">
                     <tr>
                         <th>Oppstigning</th>
-                        <td>{{trip.stats.distance_asc}} km,</th>
+                        <td>{{trip.stats.distance_asc | display_length}},</th>
                     </tr>
                     <tr>
                         <th>Nedstigning</th>
-                        <td>{{trip.stats.distance_desc}} km,</th>
+                        <td>{{trip.stats.distance_desc | display_length}},</th>
                     </tr>
                     <tr>
                         <th>Flatt terreng</th>
-                        <td>{{trip.stats.distance_flat}} km,</th>
+                        <td>{{trip.stats.distance_flat | display_length}},</th>
                     </tr>
                 </table>
             </div>
@@ -65,23 +65,23 @@
                 <table class="table table-condensed tripstats">
                     <tr>
                         <th>Maks høyde</th>
-                        <td>{{trip.stats.max_height}} m.o.h.</td>
+                        <td>{{trip.stats.max_height | round(2)}} m.o.h.</td>
                     </tr>
                     <tr>
                         <th>Min høyde</th>
-                        <td>{{trip.stats.min_height}} m.o.h.</td>
+                        <td>{{trip.stats.min_height | round(2)}} m.o.h.</td>
                     </tr>
                     <tr>
                         <th>Total oppstigning</th>
-                        <td>{{trip.stats.total_ascent}} m</td>
+                        <td>{{trip.stats.total_ascent | round(2)}} m</td>
                     </tr>
                     <tr>
                         <th>Total nedstigning</th>
-                        <td>{{trip.stats.total_descent}} m</td>
+                        <td>{{trip.stats.total_descent | round(2)}} m</td>
                     </tr>
                     <tr>
                         <th>Høydeforskjell</th>
-                        <td>{{trip.stats.elev_diff}} m</td>
+                        <td>{{trip.stats.elev_diff  | round(2)}} m</td>
                     </tr>
                 </table>                
             </div>

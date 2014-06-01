@@ -11,7 +11,6 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
 from database import Base
-from util import format_timedelta, to_km_2dec
 from computations import get_stats
 
 
@@ -163,26 +162,24 @@ class Trip(Base):
 
             total_time = end_time - start_time
 
-            avg_speed = round(
-                (stats['distance_3d'] / total_time.total_seconds()) * 3.6,
-                2
-            )
+            avg_speed = stats['distance_3d'] / total_time.total_seconds()
+
             self.stats_dict = {
                 'start': start_time.isoformat(),
                 'stop': end_time.isoformat(),
-                'total_time': format_timedelta(total_time),
+                'total_time': total_time,
                 'active_time': '',
-                'distance_2d': to_km_2dec(stats['distance_2d']),
-                'distance_3d': to_km_2dec(stats['distance_3d']),
-                'distance_flat': to_km_2dec(stats['distance_flat']),
-                'distance_asc': to_km_2dec(stats['distance_asc']),
-                'distance_desc': to_km_2dec(stats['distance_desc']),
+                'distance_2d': stats['distance_2d'],
+                'distance_3d': stats['distance_3d'],
+                'distance_flat': stats['distance_flat'],
+                'distance_asc': stats['distance_asc'],
+                'distance_desc': stats['distance_desc'],
                 'avg_speed': avg_speed,
-                'total_descent': round(stats['total_descent'], 2),
-                'total_ascent': round(stats['total_ascent'], 2),
-                'max_height': round(stats['max_height'], 2),
-                'min_height': round(stats['min_height'], 2),
-                'elev_diff': round(stats['max_height'] - stats['min_height'], 2),
+                'total_descent': stats['total_descent'],
+                'total_ascent': stats['total_ascent'],
+                'max_height': stats['max_height'],
+                'min_height': stats['min_height'],
+                'elev_diff': stats['max_height'] - stats['min_height'],
             }
         return self.stats_dict
 

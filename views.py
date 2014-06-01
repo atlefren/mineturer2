@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
 
-import arrow
 from flask import (render_template, g, request, current_app, flash, redirect,
                    url_for, abort)
 from flask.ext.login import login_required, current_user
@@ -9,18 +8,12 @@ from shapely.geometry import mapping
 
 from models import Trip
 from login_views import create_login_views
+from filters import create_filters
 
 
 def create_views(app):
 
-    @app.template_filter('strftime')
-    def _jinja2_filter_datetime(date, format=None):
-
-        # TODO: fix format to norwegian with no leadign zero
-        if format is None:
-            format = 'D. MMMM YYYY'
-        return arrow.get(date).format(format, locale='nb')
-
+    create_filters(app)
     create_login_views(app)
 
     @app.before_request

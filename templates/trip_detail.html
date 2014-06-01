@@ -48,8 +48,8 @@
                         <tr>
                             <td>{{trip.type}}</td>
                             <td>{{trip.stats.total_time}}</td>
-                            <td>{{trip.stats.distance_2d}} km</td>
-                            <td>{{trip.stats.avg_speed}} km/t</td>
+                            <td>{{trip.stats.distance_2d | display_length}}</td>
+                            <td>{{trip.stats.avg_speed | display_speed}}</td>
                         </tr>
                     </table>
                 </div>                

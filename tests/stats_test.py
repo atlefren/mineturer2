@@ -44,25 +44,25 @@ class TripStatTest(unittest.TestCase):
         stats = self.trip.stats
         self.assertEquals(stats['start'], '2012-10-10T17:06:27+00:00')
         self.assertEquals(stats['stop'], '2012-10-10T17:45:04+00:00')
-        self.assertEquals(stats['total_time'], '38:37')
+        self.assertEquals(stats['total_time'].total_seconds(), 2317.0)
         #self.assertEquals(stats['active_time'], '38:37')
 
     def test_compute_distance(self):
         stats = self.trip.stats
-        self.assertEquals(stats['distance_2d'], 1.28)
-        self.assertEquals(stats['distance_3d'], 1.33)
+        self.assertEquals(round(stats['distance_2d'], 2), 1275.68)
+        self.assertEquals(round(stats['distance_3d'], 2), 1333.96)
         self.assertEquals(stats['distance_flat'], 0.0)
-        self.assertEquals(stats['distance_asc'], 0.39)
-        self.assertEquals(stats['distance_desc'], 0.94)
+        self.assertEquals(round(stats['distance_asc'], 2), 394.32)
+        self.assertEquals(round(stats['distance_desc'], 2), 939.64)
 
     def test_compute_speeds(self):
         stats = self.trip.stats
-        self.assertEquals(stats['avg_speed'], 2.07)
+        self.assertEquals(round(stats['avg_speed'], 4), 0.5757)
 
     def test_compute_heights(self):
         stats = self.trip.stats
         self.assertEquals(stats['total_ascent'], 119.1)
-        self.assertEquals(stats['total_descent'], -160.9)
+        self.assertEquals(round(stats['total_descent'], 2), -160.9)
         self.assertEquals(stats['max_height'], 213.7)
         self.assertEquals(stats['min_height'], 52.8)
-        self.assertEquals(stats['elev_diff'], 160.9)
+        self.assertEquals(round(stats['elev_diff'], 2), 160.9)
