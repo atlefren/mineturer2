@@ -12,12 +12,9 @@
   {% endassets %}
 
   <script type="text/javascript">
-    (function () {
-        console.log()
+    (function () {        
         var map = MT.createMap($('.map'));
-
         var layer = L.geoJson({{geom | safe}}).addTo(map);
-
         map.fitBounds(layer.getBounds());        
     }());    
   </script>

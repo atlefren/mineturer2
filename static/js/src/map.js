@@ -36,8 +36,7 @@ var MT = this.MT || {};
             toporaster2: 'Toporaster',
             sjo_hovedkart2: 'Sjø hovedkart'
         };
-        return _.reduce(layers, function (layers, title, layername) {
-            console.log(title, layername);
+        return _.reduce(layers, function (layers, title, layername) {            
             layers[title] = createSkLayer(layername);
             return layers;
         }, {});
