@@ -54,3 +54,8 @@ class TripStatTest(unittest.TestCase):
         self.assertEquals(stats['distance_flat'], 0.0)
         self.assertEquals(stats['distance_asc'], 0.94)
         self.assertEquals(stats['distance_desc'], 0.39)
+
+    def test_compute_speeds(self):
+        stats = self.trip.stats
+        self.assertEquals(stats['avg_speed'], 2.07)
+        

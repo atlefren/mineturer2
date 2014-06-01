@@ -118,7 +118,7 @@ class Trip(Base):
     points = relationship(
         'Point',
         backref='mineturer.trips',
-        order_by='desc(Point.time)',
+        order_by='asc(Point.time)',
         lazy='dynamic'
     )
 
@@ -161,16 +161,23 @@ class Trip(Base):
 
             distances = get_distances(points)
 
+            total_time = end_time - start_time
+
+            avg_speed = round(
+                (distances['distance_3d'] / total_time.total_seconds()) * 3.6,
+                2
+            )
             self.stats_dict = {
                 'start': start_time.isoformat(),
                 'stop': end_time.isoformat(),
-                'total_time': format_timedelta(end_time - start_time),
+                'total_time': format_timedelta(total_time),
                 'active_time': '',
                 'distance_2d': to_km_2dec(distances['distance_2d']),
                 'distance_3d': to_km_2dec(distances['distance_3d']),
                 'distance_flat': to_km_2dec(distances['distance_flat']),
                 'distance_asc': to_km_2dec(distances['distance_asc']),
-                'distance_desc': to_km_2dec(distances['distance_desc'])
+                'distance_desc': to_km_2dec(distances['distance_desc']),
+                'avg_speed': avg_speed
             }
         return self.stats_dict
 

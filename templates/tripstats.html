@@ -4,11 +4,11 @@
                 <table class="table table-condensed tripstats">
                     <tr>
                         <th>Starttid</th>
-                        <td>{{trip.stats.start}}</th>
+                        <td>{{trip.stats.start | strftime('D.MM.YYYY, kl HH:mm')}}</th>
                     </tr>
                     <tr>
                         <th>Slutttid</th>
-                        <td>{{trip.stats.stop}}</th>
+                        <td>{{trip.stats.stop | strftime('D.MM.YYYY, kl HH:mm')}}</th>
                     </tr>
                     <tr>
                         <th>Total tid</th>
@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th>Total oppstigning</th>
-                        <td>{{trip.stats.avg_speed}}</td>
+                        <td>{{trip.stats.total_descent}}</td>
                     </tr>
                     <tr>
                         <th>Total nedstigning</th>
