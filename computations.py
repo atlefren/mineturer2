@@ -16,18 +16,22 @@ def vincenty_distance(point1, point2):
     return distance.distance(p1, p2).meters
 
 
-def get_distances(points):
+def get_stats(points):
     total_distance_2d = 0.0
     total_distance_3d = 0.0
     flat_distance = 0.0
     asc_distance = 0.0
     desc_distance = 0.0
+
+    total_descent = 0.0
+    total_ascent = 0.0
+
     for current_point, next_point in izip(points, islice(points, 1, None)):
         distance_2d = vincenty_distance(
             to_shape(current_point.geom),
             to_shape(next_point.geom)
         )
-        distance_vertical = current_point.ele - next_point.ele
+        distance_vertical = next_point.ele - current_point.ele
         distance_3d = math.sqrt(
             math.pow(distance_2d, 2) + math.pow(distance_vertical, 2)
         )
@@ -39,13 +43,17 @@ def get_distances(points):
             flat_distance += distance_3d
         elif distance_vertical > 0.0:
             asc_distance += distance_3d
+            total_ascent += float(distance_vertical)
         elif distance_vertical < 0.0:
             desc_distance += distance_3d
+            total_descent += float(distance_vertical)
 
     return {
         'distance_2d': total_distance_2d,
         'distance_3d': total_distance_3d,
         'distance_flat': flat_distance,
         'distance_asc': asc_distance,
-        'distance_desc': desc_distance
+        'distance_desc': desc_distance,
+        'total_descent': total_descent,
+        'total_ascent': total_ascent
     }

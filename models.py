@@ -12,7 +12,7 @@ from shapely.geometry import LineString
 
 from database import Base
 from util import format_timedelta, to_km_2dec
-from computations import get_distances
+from computations import get_stats
 
 
 class User(Base):
@@ -159,12 +159,12 @@ class Trip(Base):
             start_time = points[0].time
             end_time = points[-1].time
 
-            distances = get_distances(points)
+            stats = get_stats(points)
 
             total_time = end_time - start_time
 
             avg_speed = round(
-                (distances['distance_3d'] / total_time.total_seconds()) * 3.6,
+                (stats['distance_3d'] / total_time.total_seconds()) * 3.6,
                 2
             )
             self.stats_dict = {
@@ -172,12 +172,14 @@ class Trip(Base):
                 'stop': end_time.isoformat(),
                 'total_time': format_timedelta(total_time),
                 'active_time': '',
-                'distance_2d': to_km_2dec(distances['distance_2d']),
-                'distance_3d': to_km_2dec(distances['distance_3d']),
-                'distance_flat': to_km_2dec(distances['distance_flat']),
-                'distance_asc': to_km_2dec(distances['distance_asc']),
-                'distance_desc': to_km_2dec(distances['distance_desc']),
-                'avg_speed': avg_speed
+                'distance_2d': to_km_2dec(stats['distance_2d']),
+                'distance_3d': to_km_2dec(stats['distance_3d']),
+                'distance_flat': to_km_2dec(stats['distance_flat']),
+                'distance_asc': to_km_2dec(stats['distance_asc']),
+                'distance_desc': to_km_2dec(stats['distance_desc']),
+                'avg_speed': avg_speed,
+                'total_descent': round(stats['total_descent'], 2),
+                'total_ascent': round(stats['total_ascent'], 2),
             }
         return self.stats_dict
 
