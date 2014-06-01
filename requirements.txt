@@ -13,6 +13,7 @@ bcrypt==1.0.2
 cffi==0.8.2
 cssmin==0.2.0
 distribute==0.6.24
+geopy==0.99
 gunicorn==18.0
 itsdangerous==0.24
 jsmin==2.0.9

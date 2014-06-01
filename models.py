@@ -7,10 +7,12 @@ from sqlalchemy import (Column, Integer, String, Text, Boolean, DateTime,
                         Numeric, ForeignKey)
 from sqlalchemy.orm import relationship
 from geoalchemy2.types import Geometry
-from geoalchemy2.shape import to_shape
+from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
 from database import Base
+from util import format_timedelta, to_km_2dec
+from computations import get_distances
 
 
 class User(Base):
@@ -120,6 +122,9 @@ class Trip(Base):
         lazy='dynamic'
     )
 
+    stored_points_list = None
+    stats_dict = None
+
     def serialize(self):
         return {
             'id': self.id,
@@ -131,16 +136,45 @@ class Trip(Base):
     def serialize_with_point(self):
         data = self.serialize()
         start = to_shape(self.points.first().geom)
-        data['position'] = {'lon': start.x, 'lat': start.y}        
+        data['position'] = {'lon': start.x, 'lat': start.y}
         return data
 
     @property
+    def stored_points(self):
+        if not self.stored_points_list:
+            self.stored_points_list = self.points.all()
+        return self.stored_points_list
+
+    @property
     def geom(self):
-        points = [to_shape(point.geom) for point in self.points.all()]
-        return  LineString(points)
+        points = [to_shape(point.geom) for point in self.stored_points]
+        return LineString(points)
 
     @property
     def stats(self):
+
+        if not self.stats_dict:
+            points = self.stored_points
+
+            start_time = points[0].time
+            end_time = points[-1].time
+
+            distances = get_distances(points)
+
+            self.stats_dict = {
+                'start': start_time.isoformat(),
+                'stop': end_time.isoformat(),
+                'total_time': format_timedelta(end_time - start_time),
+                'active_time': '',
+                'distance_2d': to_km_2dec(distances['distance_2d']),
+                'distance_3d': to_km_2dec(distances['distance_3d']),
+                'distance_flat': to_km_2dec(distances['distance_flat']),
+                'distance_asc': to_km_2dec(distances['distance_asc']),
+                'distance_desc': to_km_2dec(distances['distance_desc'])
+            }
+        return self.stats_dict
+
+        '''
         return {
             'start': '10.02.2013, kl 11:08',
             'stop': '10.02.2013, kl 12:26',
@@ -159,6 +193,7 @@ class Trip(Base):
             'total_descent': '861.8 m',
             'elev_diff': '366.9 m',
         }
+        '''
 
     def __repr__(self):
         return '<Trip %r>' % (self.title)
@@ -174,6 +209,13 @@ class Point(Base):
     hr = Column('hr', Numeric)
     tripid = Column(Integer, ForeignKey('mineturer.trips.tripid'))
     trip = relationship(Trip, primaryjoin=tripid == Trip.id)
+
+    def __init__(self, trip, geom, time, ele=None, hr=None):
+        self.trip = trip
+        self.geom = from_shape(geom, srid=4326)
+        self.time = time
+        self.ele = ele
+        self.hr = hr
 
     def __repr__(self):
         return '<Point %r>' % (self.pid)
