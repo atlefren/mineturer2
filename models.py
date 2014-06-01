@@ -180,6 +180,9 @@ class Trip(Base):
                 'avg_speed': avg_speed,
                 'total_descent': round(stats['total_descent'], 2),
                 'total_ascent': round(stats['total_ascent'], 2),
+                'max_height': round(stats['max_height'], 2),
+                'min_height': round(stats['min_height'], 2),
+                'elev_diff': round(stats['max_height'] - stats['min_height'], 2),
             }
         return self.stats_dict
 

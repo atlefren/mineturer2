@@ -63,4 +63,6 @@ class TripStatTest(unittest.TestCase):
         stats = self.trip.stats
         self.assertEquals(stats['total_ascent'], 119.1)
         self.assertEquals(stats['total_descent'], -160.9)
-
+        self.assertEquals(stats['max_height'], 213.7)
+        self.assertEquals(stats['min_height'], 52.8)
+        self.assertEquals(stats['elev_diff'], 160.9)

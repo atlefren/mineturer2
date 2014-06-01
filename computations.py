@@ -25,7 +25,6 @@ def get_stats(points):
 
     total_descent = 0.0
     total_ascent = 0.0
-
     for current_point, next_point in izip(points, islice(points, 1, None)):
         distance_2d = vincenty_distance(
             to_shape(current_point.geom),
@@ -48,6 +47,7 @@ def get_stats(points):
             desc_distance += distance_3d
             total_descent += float(distance_vertical)
 
+    heights = [point.ele for point in points if point.ele]
     return {
         'distance_2d': total_distance_2d,
         'distance_3d': total_distance_3d,
@@ -55,5 +55,7 @@ def get_stats(points):
         'distance_asc': asc_distance,
         'distance_desc': desc_distance,
         'total_descent': total_descent,
-        'total_ascent': total_ascent
+        'total_ascent': total_ascent,
+        'max_height': max(heights),
+        'min_height': min(heights)
     }
