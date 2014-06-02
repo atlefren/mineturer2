@@ -154,43 +154,43 @@ table.tripstats td {
 }
 
 .nordicski {   
-    background-image: url(../../images/icons/nordicski.png);
+    background-image: url(../../images/icons/nordicski_square.png);
 }
 .atv {   
-    background-image: url(../../images/icons/atv.png);
+    background-image: url(../../images/icons/atv_square.png);
 }
 .car {   
-    background-image: url(../../images/icons/car.png);
+    background-image: url(../../images/icons/car_square.png);
 }
 .cycling {   
-    background-image: url(../../images/icons/cycling.png);
+    background-image: url(../../images/icons/cycling_square.png);
 }
 .default {   
-    background-image: url(../../images/icons/default.png);
+    background-image: url(../../images/icons/default_square.png);
 }
 .hiking {   
-    background-image: url(../../images/icons/hiking.png);
+    background-image: url(../../images/icons/hiking_square.png);
 }
 .jogging {   
-    background-image: url(../../images/icons/jogging.png);
+    background-image: url(../../images/icons/jogging_square.png);
 }
 .motorbike {   
-    background-image: url(../../images/icons/motorbike.png);
+    background-image: url(../../images/icons/motorbike_square.png);
 }
 .rollerskate {   
-    background-image: url(../../images/icons/rollerskate.png);
+    background-image: url(../../images/icons/rollerskate_square.png);
 }
 .snowboarding {   
-    background-image: url(../../images/icons/snowboarding.png);
+    background-image: url(../../images/icons/snowboarding_square.png);
 }
 .snowshoeing {   
-    background-image: url(../../images/icons/snowshoeing.png);
+    background-image: url(../../images/icons/snowshoeing_square.png);
 }
 .swimming {   
-    background-image: url(../../images/icons/swimming.png);
+    background-image: url(../../images/icons/swimming_square.png);
 }
 .walking {   
-    background-image: url(../../images/icons/walking.png);
+    background-image: url(../../images/icons/walking_square.png);
 }
 
 .footer a {
