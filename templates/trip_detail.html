@@ -12,7 +12,8 @@
   {% endassets %}
 
   <script type="text/javascript">
-    (function () {        
+    (function () {
+        L.Icon.Default.imagePath = '/static/css/lib/leaflet-0.7.3/images/';
         var map = MT.createMap($('.map'));
         var layer = L.geoJson(
             {{geom | safe}},
@@ -20,6 +21,22 @@
                 color: '#17A417'
             }
         ).addTo(map);
+
+        var firstIcon = L.icon({
+            iconUrl: '/static/images/icons/start.png',            
+            iconSize: [21, 25], // size of the icon            
+            iconAnchor: [2, 25] // point of the icon which will correspond to marker's             
+        });
+        var lastIcon = L.icon({
+            iconUrl: '/static/images/icons/finish.png',            
+            iconSize: [21, 25], // size of the icon            
+            iconAnchor: [2, 25] // point of the icon which will correspond to marker's             
+        });
+        var first = _.first(_.first(layer.getLayers()).getLatLngs());
+        var last = _.last(_.last(layer.getLayers()).getLatLngs());
+        L.marker(first, {icon: firstIcon}).addTo(map);
+        L.marker(last, {icon: lastIcon}).addTo(map);
+
         map.fitBounds(layer.getBounds());        
     }());    
   </script>
