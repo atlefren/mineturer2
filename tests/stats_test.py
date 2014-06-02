@@ -46,6 +46,9 @@ class TripStatTest(unittest.TestCase):
         self.assertEquals(stats['stop'], '2012-10-10T17:45:04+00:00')
         self.assertEquals(stats['total_time'].total_seconds(), 2317.0)
         self.assertEquals(stats['active_time'].total_seconds(), 2317.0)
+        self.assertEquals(stats['flat_time'].total_seconds(), 0.0)
+        self.assertEquals(stats['asc_time'].total_seconds(), 155.0)
+        self.assertEquals(stats['desc_time'].total_seconds(), 2162.0)
 
     def test_compute_distance(self):
         stats = self.trip.stats

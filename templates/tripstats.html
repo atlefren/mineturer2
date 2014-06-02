@@ -48,15 +48,27 @@
                 <table class="table table-condensed tripstats">
                     <tr>
                         <th>Oppstigning</th>
-                        <td>{{trip.stats.distance_asc | display_length}},</th>
+                        <td>
+                            {{trip.stats.distance_asc | display_length}},
+                            {{trip.stats.asc_time | format_timedelta}},
+                            {{trip.stats.asc_speed | display_speed}}
+                        </th>
                     </tr>
                     <tr>
                         <th>Nedstigning</th>
-                        <td>{{trip.stats.distance_desc | display_length}},</th>
+                        <td>
+                            {{trip.stats.distance_desc | display_length}},
+                            {{trip.stats.desc_time | format_timedelta}},
+                            {{trip.stats.desc_speed | display_speed}}
+                        </th>
                     </tr>
                     <tr>
                         <th>Flatt terreng</th>
-                        <td>{{trip.stats.distance_flat | display_length}},</th>
+                        <td>
+                            {{trip.stats.distance_flat | display_length}},
+                            {{trip.stats.flat_time | format_timedelta}},
+                            {{trip.stats.flat_speed | display_speed}}
+                        </th>
                     </tr>
                 </table>
             </div>

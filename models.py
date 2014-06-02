@@ -11,7 +11,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from shapely.geometry import LineString
 
 from database import Base
-from computations import get_stats
+from computations import get_stats, compute_speed
 
 
 class User(Base):
@@ -162,9 +162,21 @@ class Trip(Base):
 
             total_time = end_time - start_time
 
-            avg_speed = stats['distance_3d'] / total_time.total_seconds()
-            avg_moving_speed = stats['distance_3d'] / \
-                stats['active_time'].total_seconds()
+            avg_speed = compute_speed(stats['distance_3d'], total_time)
+            avg_moving_speed = compute_speed(
+                stats['distance_3d'],
+                stats['active_time']
+            )
+
+            asc_speed = compute_speed(stats['distance_asc'], stats['asc_time'])
+            desc_speed = compute_speed(
+                stats['distance_desc'],
+                stats['desc_time']
+            )
+            flat_speed = compute_speed(
+                stats['distance_flat'],
+                stats['flat_time']
+            )
 
             self.stats_dict = {
                 'start': start_time.isoformat(),
@@ -176,12 +188,18 @@ class Trip(Base):
                 'distance_flat': stats['distance_flat'],
                 'distance_asc': stats['distance_asc'],
                 'distance_desc': stats['distance_desc'],
+                'asc_speed': asc_speed,
+                'desc_speed': desc_speed,
+                'flat_speed': flat_speed,
                 'avg_speed': avg_speed,
                 'avg_moving_speed': avg_moving_speed,
                 'total_descent': stats['total_descent'],
                 'total_ascent': stats['total_ascent'],
                 'max_height': stats['max_height'],
                 'min_height': stats['min_height'],
+                'flat_time': stats['flat_time'],
+                'asc_time': stats['asc_time'],
+                'desc_time': stats['desc_time'],
                 'elev_diff': stats['max_height'] - stats['min_height'],
             }
         return self.stats_dict

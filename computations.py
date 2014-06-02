@@ -17,6 +17,12 @@ def vincenty_distance(point1, point2):
     return distance.distance(p1, p2).meters
 
 
+def compute_speed(distance, delta):
+    if delta.total_seconds() == 0.0:
+        return 0.0
+    return distance / delta.total_seconds()
+
+
 def get_stats(points):
     total_distance_2d = 0.0
     total_distance_3d = 0.0
@@ -27,8 +33,11 @@ def get_stats(points):
     total_descent = 0.0
     total_ascent = 0.0
 
-    #total_time = 0.0
     active_time = 0.0
+    flat_time = 0.0
+    asc_time = 0.0
+    desc_time = 0.0
+
     for current_point, next_point in izip(points, islice(points, 1, None)):
         distance_2d = vincenty_distance(
             to_shape(current_point.geom),
@@ -51,12 +60,18 @@ def get_stats(points):
 
         if distance_vertical == 0.0:
             flat_distance += distance_3d
+            if m > 0.1:
+                flat_time += time
         elif distance_vertical > 0.0:
             asc_distance += distance_3d
             total_ascent += float(distance_vertical)
+            if m > 0.1:
+                asc_time += time
         elif distance_vertical < 0.0:
             desc_distance += distance_3d
             total_descent += float(distance_vertical)
+            if m > 0.1:
+                desc_time += time
 
     heights = [point.ele for point in points if point.ele]
     return {
@@ -70,4 +85,7 @@ def get_stats(points):
         'max_height': max(heights),
         'min_height': min(heights),
         'active_time': timedelta(seconds=active_time),
+        'flat_time': timedelta(seconds=flat_time),
+        'asc_time': timedelta(seconds=asc_time),
+        'desc_time': timedelta(seconds=desc_time),
     }
