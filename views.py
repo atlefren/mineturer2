@@ -11,19 +11,19 @@ from login_views import create_login_views
 from filters import create_filters
 
 TRIP_TYPES = {
-    'hiking': 'Fjelltur',
-    'jogging': 'Joggetur',
-    'walking': 'Gåtur',
-    'cycling': 'Sykling',
-    'nordicski': 'Skitur',
-    'car': 'Biltur',
-    'swimming': 'Svømmetur',
-    'rollerskate': 'Rulleskøyter',
-    'snowshoeing': 'Truger',
-    'motorbike': 'Motorsykkel',
-    'snowmobiling': 'Snøscooter',
-    'atv': 'ATV',
-    'default': 'Annet',
+    'hiking': u'Fjelltur',
+    'jogging': u'Joggetur',
+    'walking': u'Gåtur',
+    'cycling': u'Sykling',
+    'nordicski': u'Skitur',
+    'car': u'Biltur',
+    'swimming': u'Svømmetur',
+    'rollerskate': u'Rulleskøyter',
+    'snowshoeing': u'Truger',
+    'motorbike': u'Motorsykkel',
+    'snowmobiling': u'Snøscooter',
+    'atv': u'ATV',
+    'default': u'Annet',
 }
 
 
@@ -77,6 +77,45 @@ def create_views(app):
     def trips():
         trips = [trip.serialize_with_point() for trip in current_user.trips]
         return render_template('trips.html', trips=json.dumps(trips))
+
+    ALLOWED_EXTENSIONS = set(['gpx'])
+
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+    @app.route('/upload', methods=['GET', 'POST'])
+    @login_required
+    def upload():
+        errors = {}
+        data = {}
+        if request.method == 'POST':
+
+            file = request.files['file']
+            title = request.form['title']
+            type = request.form['type']
+            description = request.form['description']
+
+            if not title or title == '':
+                errors['title'] = 'Oppgi en tittel'
+            if not file:
+                errors['file'] = u'Du må angi en fil.'
+            elif not allowed_file(file.filename):
+                errors['file'] = u'Ugyldig filtype! (må være en av %s)' % \
+                    ', '.join(ALLOWED_EXTENSIONS)
+            data['title'] = title
+            data['type'] = type
+            data['description'] = description
+            if not errors:
+                print file
+                print data
+
+        return render_template(
+            'upload.html',
+            trip_types=TRIP_TYPES,
+            errors=errors,
+            data=data
+        )
 
     @app.route('/trips/<int:id>')
     def trip_detail(id):

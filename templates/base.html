@@ -54,9 +54,9 @@
 
             {% if g.user.is_authenticated() %}          
 
-            <button class="btn btn-lg btn-default navbar-btn btn-ok" type="button">
+            <a class="btn btn-lg btn-default navbar-btn btn-ok" href="{{url_for('upload')}}">
               <span class="glyphicon glyphicon-upload"></span> Last opp ny tur
-            </button>
+            </a>            
             <a class="btn btn-lg btn-default navbar-btn btn-ok" href="{{url_for('editprofile')}}">
               <span class="glyphicon glyphicon-user"></span> Rediger profil
             </a>
