@@ -9,6 +9,7 @@ from shapely.geometry import mapping
 from models import Trip
 from login_views import create_login_views
 from filters import create_filters
+from parse_gpx import parse_gpx
 
 TRIP_TYPES = {
     'hiking': u'Fjelltur',
@@ -107,8 +108,18 @@ def create_views(app):
             data['type'] = type
             data['description'] = description
             if not errors:
-                print file
-                print data
+
+                trip = Trip(
+                    user=current_user,
+                    title=title,
+                    description=description,
+                    type=type
+                )
+                trip.points = parse_gpx(file)
+                current_app.db_session.add(trip)
+                current_app.db_session.commit()
+                flash(u'Turen ble lagret!')
+                return redirect(url_for('trip_detail', id=trip.id))
 
         return render_template(
             'upload.html',

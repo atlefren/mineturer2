@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import hashlib
 import bcrypt
-
+from datetime import datetime
 
 from sqlalchemy import (Column, Integer, String, Text, Boolean, DateTime,
                         Numeric, ForeignKey)
@@ -124,6 +124,21 @@ class Trip(Base):
     stored_points_list = None
     stats_dict = None
 
+    def __init__(self, user=None, title=None, description=None, type=None,
+                 start=None, stop=None):
+        self.user = user
+        self.title = title
+        self.description = description
+        self.type = type
+        if start:
+            self.start = start
+        else:
+            self.start = datetime.now()
+        if stop:
+            self.stop = stop
+        else:
+            self.stop = datetime.now()
+
     def serialize(self):
         return {
             'id': self.id,
@@ -204,27 +219,6 @@ class Trip(Base):
             }
         return self.stats_dict
 
-        '''
-        return {
-            'start': '10.02.2013, kl 11:08',
-            'stop': '10.02.2013, kl 12:26',
-            'total_time': '1t 18m 1s',
-            'active_time': '1t 13m 43s',
-            'length_2d': '13.65 km',
-            'length_3d': '13.92 km',
-            'avg_speed': '10.71 km/t',
-            'avg_moving_speed': '11.33 km/t',
-            'ascent': '5.75 km, 0t 36m 21s, 9.5 km/t',
-            'descent': '7.1 km, 0t 30m 42s, 13.89 km/t',
-            'flat': '1.06 km, 0t 6m 40s, 9.57 km/t',
-            'max_height': '476.1 m.o.h.',
-            'min_height': '109.2 m.o.h.',
-            'total_ascent': '1081.2 m',
-            'total_descent': '861.8 m',
-            'elev_diff': '366.9 m',
-        }
-        '''
-
     def __repr__(self):
         return '<Trip %r>' % (self.title)
 
@@ -240,7 +234,7 @@ class Point(Base):
     tripid = Column(Integer, ForeignKey('mineturer.trips.tripid'))
     trip = relationship(Trip, primaryjoin=tripid == Trip.id)
 
-    def __init__(self, trip, geom, time, ele=None, hr=None):
+    def __init__(self, trip=None, geom=None, time=None, ele=None, hr=None):
         self.trip = trip
         self.geom = from_shape(geom, srid=4326)
         self.time = time

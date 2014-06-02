@@ -43,7 +43,10 @@ def get_stats(points):
             to_shape(current_point.geom),
             to_shape(next_point.geom)
         )
-        distance_vertical = next_point.ele - current_point.ele
+        if next_point.ele and current_point.ele:
+            distance_vertical = next_point.ele - current_point.ele
+        else:
+            distance_vertical = 0.0
         distance_3d = math.sqrt(
             math.pow(distance_2d, 2) + math.pow(distance_vertical, 2)
         )
@@ -77,6 +80,13 @@ def get_stats(points):
                 desc_time += time
 
     heights = [point.ele for point in points if point.ele]
+    if heights:
+        max_height = max(heights)
+        min_height = min(heights)
+    else:
+        max_height = 0.0
+        min_height = 0.0
+
     return {
         'distance_2d': total_distance_2d,
         'distance_3d': total_distance_3d,
@@ -85,8 +95,8 @@ def get_stats(points):
         'distance_desc': desc_distance,
         'total_descent': total_descent,
         'total_ascent': total_ascent,
-        'max_height': max(heights),
-        'min_height': min(heights),
+        'max_height': max_height,
+        'min_height': min_height,
         'active_time': timedelta(seconds=active_time),
         'flat_time': timedelta(seconds=flat_time),
         'asc_time': timedelta(seconds=asc_time),
