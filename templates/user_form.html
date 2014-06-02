@@ -5,6 +5,7 @@
             type="text"
             name="username"
             id="inputUsername"
+            class="form-control"
             value="{{ user.username or '' }}"
             required
             {% if edit %} readonly {% endif %}
@@ -22,6 +23,7 @@
             type="password" 
             name="password"
             id="inputPassword"
+            class="form-control"
             {% if not edit %} required {% endif %}
         />
         {% if errors.password %}
@@ -37,6 +39,7 @@
             type="password"
             name="password2"
             id="inputPassword2"
+            class="form-control"
             {% if not edit %} required {% endif %}
         />
           {% if errors.password2 %}
@@ -52,6 +55,7 @@
             type="text"
             name="fullname"
             id="inputFullname"
+            class="form-control"
             value="{{ user.fullname or '' }}"
             required
         />
@@ -68,6 +72,7 @@
             type="email"
             name="email"
             id="inputEmail"
+            class="form-control"
             value="{{ user.email or '' }}"
             required
         />
