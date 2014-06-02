@@ -72,5 +72,9 @@ triplist_js = Bundle(
 tripdetail_js = Bundle(
     base_js,
     map_js,
+    Bundle(
+        'js/src/tripdetailMap.js',
+        filters=js_filters,
+    ),
     output='gen/js/tripdetail_js.js'
 )
