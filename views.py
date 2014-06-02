@@ -10,6 +10,22 @@ from models import Trip
 from login_views import create_login_views
 from filters import create_filters
 
+TRIP_TYPES = {
+    'hiking': 'Fjelltur',
+    'jogging': 'Joggetur',
+    'walking': 'Gåtur',
+    'cycling': 'Sykling',
+    'nordicski': 'Skitur',
+    'car': 'Biltur',
+    'swimming': 'Svømmetur',
+    'rollerskate': 'Rulleskøyter',
+    'snowshoeing': 'Truger',
+    'motorbike': 'Motorsykkel',
+    'snowmobiling': 'Snøscooter',
+    'atv': 'ATV',
+    'default': 'Annet',
+}
+
 
 def create_views(app):
 
@@ -71,5 +87,6 @@ def create_views(app):
         return render_template(
             'trip_detail.html',
             trip=trip,
+            trip_types=TRIP_TYPES,
             geom=json.dumps(mapping(trip.geom))
         )
