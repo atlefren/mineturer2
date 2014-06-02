@@ -14,7 +14,12 @@
   <script type="text/javascript">
     (function () {        
         var map = MT.createMap($('.map'));
-        var layer = L.geoJson({{geom | safe}}).addTo(map);
+        var layer = L.geoJson(
+            {{geom | safe}},
+            {
+                color: '#17A417'
+            }
+        ).addTo(map);
         map.fitBounds(layer.getBounds());        
     }());    
   </script>
