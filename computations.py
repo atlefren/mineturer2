@@ -50,7 +50,10 @@ def get_stats(points):
 
         delta_time = next_point.time - current_point.time
         time = delta_time.total_seconds()
-        m = distance_3d / time
+        if time > 0.0:
+            m = distance_3d / time
+        else:
+            m = 0.0
 
         total_distance_2d += distance_2d
         total_distance_3d += distance_3d
