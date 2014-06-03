@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+version="1.1"
+creator="Created by My Tracks on Android."
+xmlns="http://www.topografix.com/GPX/1/1"
+xmlns:topografix="http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd">
+<metadata>
+<name><![CDATA[10/10/2012 19:06]]></name>
+<desc><![CDATA[]]></desc>
+</metadata>
+<trk>
+<name><![CDATA[10/10/2012 19:06]]></name>
+<desc><![CDATA[]]></desc>
+<extensions><topografix:color>c0c0c0</topografix:color></extensions>
+<trkseg>
+
+<trkpt lat="63.399736" lon="10.434591">
+<ele>94.6</ele>
+<time>2012-10-10T17:06:27.000Z</time>
+</trkpt>
+
+<trkpt lat="63.40054" lon="10.434781">
+<ele>193.4</ele>
+<time>2012-10-10T17:07:10.000Z</time>
+</trkpt>
+
+<trkpt lat="63.401501" lon="10.430045">
+<ele>213.7</ele>
+<time>2012-10-10T17:09:02.000Z</time>
+</trkpt>
+
+<trkpt lat="63.405615" lon="10.446138">
+<ele>52.8</ele>
+<time>2012-10-10T17:45:04.000Z</time>
+</trkpt>
+
+</trkseg>
+</trk>
+</gpx>

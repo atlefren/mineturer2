@@ -13,10 +13,12 @@ bcrypt==1.0.2
 cffi==0.8.2
 cssmin==0.2.0
 distribute==0.6.24
+generateDS==2.12d
 geopy==0.99
 gunicorn==18.0
 itsdangerous==0.24
 jsmin==2.0.9
+lxml==3.3.5
 psycopg2==2.5.3
 pycparser==2.10
 python-dateutil==2.2

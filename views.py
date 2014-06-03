@@ -109,13 +109,16 @@ def create_views(app):
             data['description'] = description
             if not errors:
 
+                points = parse_gpx(file)   
                 trip = Trip(
                     user=current_user,
                     title=title,
                     description=description,
-                    type=type
+                    type=type,
+                    start=points[0].time,
+                    stop=points[-1].time,
                 )
-                trip.points = parse_gpx(file)
+                trip.points = points
                 current_app.db_session.add(trip)
                 current_app.db_session.commit()
                 flash(u'Turen ble lagret!')
