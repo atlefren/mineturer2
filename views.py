@@ -108,21 +108,23 @@ def create_views(app):
             data['type'] = type
             data['description'] = description
             if not errors:
-
-                points = parse_gpx(file)   
-                trip = Trip(
-                    user=current_user,
-                    title=title,
-                    description=description,
-                    type=type,
-                    start=points[0].time,
-                    stop=points[-1].time,
-                )
-                trip.points = points
-                current_app.db_session.add(trip)
-                current_app.db_session.commit()
-                flash(u'Turen ble lagret!')
-                return redirect(url_for('trip_detail', id=trip.id))
+                try:
+                    points = parse_gpx(file)
+                    trip = Trip(
+                        user=current_user,
+                        title=title,
+                        description=description,
+                        type=type,
+                        start=points[0].time,
+                        stop=points[-1].time,
+                    )
+                    trip.points = points
+                    current_app.db_session.add(trip)
+                    current_app.db_session.commit()
+                    flash(u'Turen ble lagret!')
+                    return redirect(url_for('trip_detail', id=trip.id))
+                except ValueError:
+                    flash(u'Filen du lastet opp er ikke gyldig GPX!')
 
         return render_template(
             'upload.html',

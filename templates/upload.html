@@ -3,6 +3,17 @@
   <div class="row">
         <div class="col-md-6 col-md-offset-1">
             <h2>Last opp ny tur</h2>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-danger">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
             <form 
                 action=""
                 method="post"
