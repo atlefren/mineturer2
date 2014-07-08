@@ -1,0 +1,137 @@
+---
+- hosts: development
+  sudo: yes
+  vars:
+    database:
+        name: mineturer2
+        username: mineturer2
+        password: mineturer2
+        schema: mineturer
+
+  tasks:
+    - name: add postgresql key
+      apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+    - name: add postgresql repo
+      apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' state=present
+
+    - name: install packages
+      apt: pkg={{ item }} state=latest update_cache=yes cache_valid_time=3600
+      with_items:
+        - postgresql
+        - postgis
+        - python-psycopg2
+        - postgresql-9.3-postgis-2.1
+        - postgresql-contrib
+    # postgresql package requires correct locale when installing
+      environment:
+        LC_ALL: en_US.UTF-8
+
+    - name: ensure postgresql is running
+      sudo: yes
+      service: name=postgresql state=running enabled=yes
+
+    - name: create postgresql databases
+      sudo: yes
+      sudo_user: postgres
+      postgresql_db: name={{ database.name }} encoding='UTF-8'
+      register: create_databases
+
+    - name: create postgresql users
+      sudo: yes
+      sudo_user: postgres
+      postgresql_user: name={{ database.username }}
+                       password={{ database.password }}
+                       db={{ database.name }}
+                       role_attr_flags=NOCREATEROLE,NOSUPERUSER,NOCREATEDB
+
+    - name: create postgis extensions
+      sudo: yes
+      sudo_user: postgres
+      command: psql -d {{ database.name }} -c 'CREATE EXTENSION IF NOT EXISTS POSTGIS;'
+      when: create_databases.changed
+
+    - name: create database schema
+      sudo: yes
+      sudo_user: postgres
+      command: psql -d {{ database.name }} -c 'CREATE SCHEMA {{ database.schema }};'
+      when: create_databases.changed
+
+    - name: restart postgres
+      service: name=postgresql state=restarted
+
+    - name: install nginx
+      apt: pkg=nginx state=latest
+  
+    - name: copy nginx sites
+      template: src=nginx.j2
+                dest=/etc/nginx/sites-available/mineturer
+                owner=root
+                group=root
+                mode=0644
+      notify:
+        - restart nginx
+
+    - name: enable nginx sites
+      file: src=/etc/nginx/sites-available/mineturer
+            dest=/etc/nginx/sites-enabled/mineturer
+            owner=root
+            group=root
+            state=link    
+      notify:
+        - restart nginx
+
+    - name: disable default site
+      file: path=/etc/nginx/sites-enabled/default
+            state=absent
+      notify:
+        - restart nginx
+ 
+    - name: make sure nginx is running
+      service: name=nginx state=running enabled=yes
+
+    - name: install heroku toolbelt
+      shell: wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+             creates=/usr/local/heroku
+
+    - name: install packages
+      apt: pkg={{ item }} state=latest update_cache=yes
+      with_items:
+        - python-dev        
+        - libffi-dev
+        - python-pip
+        - libpq-dev
+        - libxml2
+        - libxml2-dev
+        - libxslt1-dev
+        - python-virtualenv
+        - virtualenvwrapper
+    
+    - name: install pip requirements
+      pip: requirements=/vagrant/requirements.txt virtualenv=/vagrant/venv      
+
+    - name: hide login message
+      copy: dest=/home/vagrant/.hushlogin
+            content=
+            owner=vagrant
+            group=vagrant
+            mode=0644  
+
+    - name: install bash_profile
+      copy: src=dot.bash_profile
+            dest=/home/vagrant/.bash_profile
+            owner=vagrant
+            group=vagrant
+            mode=0644
+
+    - name: create .env file for foreman
+      # Since /vagrant is mounted over NFS, we don't know the exact uid and gid
+      # of the actual user on the host machine. Need to use sudo_user
+      sudo_user: vagrant
+      template: src=dot.env.j2
+                dest=/vagrant/.env
+                mode=0600
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted enabled=yes

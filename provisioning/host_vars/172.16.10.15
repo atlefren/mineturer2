@@ -1,0 +1,7 @@
+---
+database:  
+    - name: mineturer
+      username: mineturer
+      password: mineturer
+nginx_sites:
+  - mineturer2_dev      
