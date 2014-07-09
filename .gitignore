@@ -3,3 +3,4 @@ static/gen
 *.pyc
 .env
 mineturer.sql
+.vagrant
