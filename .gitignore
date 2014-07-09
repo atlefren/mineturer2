@@ -2,3 +2,4 @@ static/.webassets-cache
 static/gen
 *.pyc
 .env
+mineturer.sql

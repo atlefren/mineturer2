@@ -20,7 +20,6 @@ class User(Base):
     __table_args__ = {'schema': 'mineturer'}
     id = Column('userid', Integer, primary_key=True)
     username = Column('username', String(20), unique=True, index=True)
-    password = Column('password', String(50), nullable=True)
     bcrypt_pwd = Column('bcrypt_pwd', String)
     fullname = Column('fullname', String(50))
     enabled = Column('enabled', Boolean)
